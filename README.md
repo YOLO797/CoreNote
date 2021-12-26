@@ -32,4 +32,4 @@ $ npm run build
 贡献者：
 
 - [燕成昭 (yanchengzhao) - Gitee.com](https://gitee.com/yanchengzhao)
-- [Igarashi](https://github.com/IgarashiToure)
+- [Igarashi-Chiduru - github.com](https://github.com/Igarashi-Chiduru)
