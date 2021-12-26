@@ -1,0 +1,68 @@
+@import (reference) '../style/variables.less';
+
+.@{prefix}-font {
+  @s-border-right: 3px;
+
+  margin: 0 2px;
+  font-weight: bold;
+  line-height: 20px;
+  background: #fff;
+
+  [data-prefers-color='dark'] & {
+    color: @c-text-dark;
+    background: @c-bg-dark;
+  }
+
+  &:not([fsize]),
+  &[fsize='s'] {
+    font-size: 15px;
+  }
+
+  &[fsize='ss'] {
+    font-size: 13px;
+  }
+
+  &[fsize='m'] {
+    font-size: 18px;
+  }
+
+  &[fsize='l'] {
+    font-size: 20px;
+  }
+
+  &:not([type]),
+  &[type='info'] {
+    color: #4569d4;
+  }
+
+  &[type='warning'] {
+    color: #f2c037;
+  }
+
+  &[type='success'] {
+    color: #21ba45;
+  }
+
+  &[type='error'] {
+    color: #ff4646;
+  }
+
+  &[type='queen'] {
+    color: #9c27b0;
+  }
+
+  &[type='miku'] {
+    color: #26a69a;
+  }
+
+  &[type='dark'] {
+    color: #1d1d1d;
+    [data-prefers-color='dark'] & {
+      color: #fe2;
+    }
+  }
+
+  &[type='orange'] {
+    color: #ff9800;
+  }
+}
