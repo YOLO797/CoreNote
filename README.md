@@ -19,7 +19,6 @@ $ npm run start
 **编译文档请执行如下命令**
 
 ```bash
-$ cd /note
 $ npm run docs:build
 ```
 
