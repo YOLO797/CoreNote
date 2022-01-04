@@ -3,7 +3,7 @@ title: Redis
 order: 1
 group:
   title: Redis
-  order: 3
+  order: 4
 ---
 
 # Redis

@@ -33,7 +33,7 @@ nav:
 #       order: 4
 
 features:
-  - icon: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/python.png
+  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/python.png
     title: Python基础
     desc: Python基础知识
     link: /back_end/python/base/初识
@@ -41,7 +41,7 @@ features:
     title: Python库
     desc: Python各种包、基础库、第三方库
     link: /back_end/python/package/标准库基础
-  - icon: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/fastapi.png
+  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/fastapi.png
     title: Python网络框架
     desc: Django、FastAPI等web框架
     link: /back_end/python/framework/fast-api

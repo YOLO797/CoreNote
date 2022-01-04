@@ -1,10 +1,10 @@
 ---
-title: Zookeeper
+title: zk
 order: 1
 
 group:
-  title: 集群ZK
-  order: 11
+  title: Zookeeper
+  order: 3
 ---
 
 # Zookeeper 集群搭建以及 python 操作 zk

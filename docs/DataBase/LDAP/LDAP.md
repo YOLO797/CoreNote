@@ -4,7 +4,7 @@ order: 1
 sidemenu: false
 group:
   title: LDAP
-  order: 2
+  order: 21
 ---
 
 LDAP

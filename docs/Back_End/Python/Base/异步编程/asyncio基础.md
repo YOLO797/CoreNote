@@ -429,7 +429,7 @@ _3.10 版后已移除:_ 如果未指定 _loop_ 并且没有正在运行的事件
 
 <Alert type="info">不仅通过 `await` 返回仅一个 **结果集**，且顺序是 **传入任务的原始顺序** </Alert>
 
-##### <Font type="dark">asyncio.as_completed`(_aws_, *, *loop=None*, *timeout=None\*)</Font>
+##### <Font type="dark">asyncio.as*completed`(\_aws*, *, *loop=None*, *timeout=None\*)</Font>
 
 > _并发_ 运行 <Font fsize="ss">aws</Font> 可迭代对象中的 [可等待对象](/back_end/python/base/资源调度/协程#33-await)，返回一个协程的 **迭代器**，会优先 **得到最快执行完的任务结果**
 
@@ -467,7 +467,7 @@ _3.10 版后已移除:_ 如果未指定 _loop_ 并且没有正在运行的事件
 
 ### 3.3 获取结果
 
-##### <Font type="dark">task.add_done_callback(_callback_, *, *context=None\*)</Font>
+##### <Font type="dark">task.add*done_callback(\_callback*, *, *context=None\*)</Font>
 
 > 添加一个回调，将在 `Task` 对象 **完成** 时被运行，此方法应仅在低层级、基于回调的代码中使用
 
@@ -804,9 +804,9 @@ asyncio.run(main())
   async def main():
       start = time.time()
       url_list = [
-          "https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/Django.png",
-          "https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/antd.png",
-          "https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/etcd.png",
+          "https://gitee.com/igarashi/breath-for-code/raw/master/public/img/Django.png",
+          "https://gitee.com/igarashi/breath-for-code/raw/master/public/img/antd.png",
+          "https://gitee.com/igarashi/breath-for-code/raw/master/public/img/etcd.png",
       ]
 
       # 创建多个协程
@@ -826,9 +826,9 @@ asyncio.run(main())
   asyncio.run(main())
 
   ### 输出结果
-  # start download: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/Django.png
-  # start download: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/antd.png
-  # start download: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/etcd.png
+  # start download: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/Django.png
+  # start download: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/antd.png
+  # start download: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/etcd.png
   # ret ['end download: Django.png', 'end download: antd.png', 'end download: etcd.png', RuntimeError()]
   # 2.351871967315674
   ```

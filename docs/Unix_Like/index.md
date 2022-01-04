@@ -16,19 +16,19 @@ nav:
   order: 1
 
 features:
-  - icon: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/linux.png
+  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/linux.png
     title: Linux
     desc: Linux系统相关
     link: /unix_like/linux/常用命令
-  - icon: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/centos.png
+  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/centos.png
     title: CentOS
     desc: CentOS系统相关
     link: /unix_like/cent-os/安装
-  - icon: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/ubuntu.png
+  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/ubuntu.png
     title: Ubuntu
     desc: Ubuntu系统相关
     link: /unix_like/ubuntu/常用命令
-  - icon: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/windows.png
+  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/windows.png
     title: VMware
     desc: VMware系统相关
     link: /unix_like/vmware/虚拟机基础

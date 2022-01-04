@@ -4,7 +4,7 @@ order: 1
 
 group:
   title: 超好用的运维提速小工具
-  order: 3
+  order: 30
 ---
 
 # Screen

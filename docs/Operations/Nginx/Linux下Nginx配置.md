@@ -4,7 +4,7 @@ order: 1
 
 group:
   title: Nginx服务
-  order: 2
+  order: 4
 ---
 
 # Nginx
@@ -221,7 +221,6 @@ web 服务：
             root /data/taobao;
             index index.html;
         }
-
 
   }
 

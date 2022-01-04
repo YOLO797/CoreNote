@@ -12,7 +12,7 @@ nav:
   order: 4
 
 features:
-  - icon: https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/CPU.png
+  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/CPU.png
     title: 计算机工作原理
     link: /soul/计算机工作原理/概述
     desc: 黑盒速速透明

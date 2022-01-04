@@ -3,7 +3,7 @@ title: Mysql基础
 order: 1
 group:
   title: MySQL
-  order: 4
+  order: 10
 ---
 
 # 数据库:(DataBase):
@@ -56,7 +56,6 @@ group:
 
     ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2), it means that
     the MySQL server daemon (Unix) or service (Windows) is not running.
-
 
 退出：
 

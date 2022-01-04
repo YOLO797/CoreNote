@@ -3,7 +3,7 @@ title: PostgreSQL基础
 order: 1
 group:
   title: PostgreSQL
-  order: 5
+  order: 12
 ---
 
 # PostgreSQL:

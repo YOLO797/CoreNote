@@ -5,8 +5,8 @@ export default defineConfig({
   title: 'CoreNote',
   mode: 'site',
   favicon:
-    'https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/arknights_logo.png',
-  logo: 'https://gitee.com/igarashi/huan-plan/raw/master/note/public/img/arknights_logo.png',
+    'https://gitee.com/igarashi/breath-for-code/raw/master/public/img/arknights_logo.png',
+  logo: 'https://gitee.com/igarashi/breath-for-code/raw/master/public/img/arknights_logo.png',
   outputPath: 'docs-dist',
   locales: [
     ['zh-CN', '中文'],
@@ -18,12 +18,12 @@ export default defineConfig({
     'en-US': [
       null, // null 值代表保留约定式生成的导航，只做增量配置
       { title: 'GitHub', path: 'https://github.com/IgarashiToure/HuanPlan' },
-      { title: 'Gitee', path: 'https://gitee.com/igarashi/huan-plan' },
+      { title: 'Gitee', path: 'https://gitee.com/igarashi/breath-for-code' },
     ],
     'zh-CN': [
       null,
       { title: 'GitHub', path: 'https://github.com/IgarashiToure/HuanPlan' },
-      { title: 'Gitee', path: 'https://gitee.com/igarashi/huan-plan' },
+      { title: 'Gitee', path: 'https://gitee.com/igarashi/breath-for-code' },
     ],
   },
   extraBabelPlugins: [
