@@ -125,15 +125,13 @@ console.log("鼠标移入事件") } } })
 - .lazy：懒加载，失去光标的时候才进行绑定，
 
   ```html
-  <input type="text" v-model.lazy="username" />
-  {{ username }}
+  <input type="text" v-model.lazy="username" /> {{ username }}
   ```
 
 - .number：转为数字
 
   ```html
-  <input type="text" v-model.lazy.number="phone" />
-  {{ phone }}
+  <input type="text" v-model.lazy.number="phone" /> {{ phone }}
   ```
 
 - .trim：去掉空格
@@ -164,8 +162,6 @@ top: true} 是个对象，可获取指令修饰符 if (binding.value){ el.style.
 - el：可以获取所有的原生属性，并在此基础上改写或指定
 - binding: 指绑定指令的所有信息
 - 注：自定义指令不支持大写，但可以下划线如 my_text
-
-  ​
 
 ### 二、补充属性
 
@@ -271,16 +267,15 @@ console.log(val) console.log(oldval) }, deep: ture //
             console.log(this)// 此时this指向VueComponent对象（即我的组件）
         }
 
-​  
- - 箭头函数内部没有 this，会直接调用父级作用域的 this，它的父级作用域是 window？ - 而写成 function(){}的话，会指向调用它的对象，也就是你这个组件
+- 箭头函数内部没有 this，会直接调用父级作用域的 this，它的父级作用域是 window？ - 而写成 function(){}的话，会指向调用它的对象，也就是你这个组件
 
-        和react的区别：（刚好和react反过来了）
-            react返回的是一个类, vue是一个对象, 对象没有形成一个块级作用域
-            类有自己的内部作用域，会在实例化的是有把this指向实例化的对象，
+       和react的区别：（刚好和react反过来了）
+           react返回的是一个类, vue是一个对象, 对象没有形成一个块级作用域
+           类有自己的内部作用域，会在实例化的是有把this指向实例化的对象，
 
-            Vue：因此可以在vue中闭包的时候写 () => 箭头函数，只要内部操作用不到this的，你随便写，怎么写都行
-            但若凡是内部使用this的，用到this的第一级方法，你都写function
+           Vue：因此可以在vue中闭包的时候写 () => 箭头函数，只要内部操作用不到this的，你随便写，怎么写都行
+           但若凡是内部使用this的，用到this的第一级方法，你都写function
 
-            React：react是写箭头函数最保险，因为箭头函数的话this不会跑偏
+           React：react是写箭头函数最保险，因为箭头函数的话this不会跑偏
 
 ### 三、Vue 的组件

@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@umijs/test": "3.5.11",
-    "dumi": "1.0.16",
+    "dumi": "1.1.23",
     "father-build": "1.19.6",
     "gh-pages": "3.2.3",
     "lint-staged": "10.5.4",

@@ -1,9 +1,9 @@
 ---
-title: vim使用指北（已放弃）
+title: vim使用指北
 order: 1
 group:
-  title: VIM
-  order: 5
+  title: Shell脚本
+  order: 8
 ---
 
 ## vim 的使用方法&快捷键：

@@ -1,12 +1,12 @@
 ---
-title: Samba
+title: Samba服务
 order: 1
 group:
-  title: Samba共享
-  order: 20
+  title: SAMBA
+  order: 15
 ---
 
-# Samba
+# SAMBA Server
 
 [Samba 文档](https://www.samba.org/)
 

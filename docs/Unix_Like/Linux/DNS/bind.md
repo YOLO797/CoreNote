@@ -1,12 +1,9 @@
 ---
 title: DNS-BIND
-order: 1
-group:
-  title: DNS
-  order: 11
+order: 2
 ---
 
-# DNS
+# DNS BIND
 
 ## DNS 主配置文件：
 
@@ -109,7 +106,6 @@ vim /etc/named.conf
 
 
             以上单位时间为M（分）、H（时）、W（周）、D（天）。
-
 
 以下为修改后的 ykb.com.zone
 
