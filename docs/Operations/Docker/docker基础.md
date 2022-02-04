@@ -31,15 +31,60 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 - [Docker 教程 | w3cschool](https://www.w3cschool.cn/docker/)
 - [Docker 从入门到实践 | w3cschool](https://www.w3cschool.cn/reqsgr/)
 
-### 1.2 容器与虚拟机对比
+> 13 年出现（没人用）15 年才逐步使用，旧金山 `dotCloud` 基于`Linux` 容器技术 **LXC** 封装的内部工具，后面开源出来改个名字叫 `Docker` 这玩意原本目的就是省钱（硬件）、省虚拟机
 
-虚拟机如 **VMware** 、**PVE** 多台虚拟机都要虚拟出了一套 **不同** 的 **硬件资源**、**Kernel**（内核）、**Lib 库**，然后在上层运行各自的 APP，像是物理机的系统中的子系统一样，从物理虚拟层面进行隔离，占用资源极高
+### 1.2 Linux 容器
 
-<img src="./img/虚拟机模型.png">
+`Docker` 在 **1.8** 版本之前，全部是封装的 [LXC](https://linuxcontainers.org/lxc/introduction/)，一个 **用户态** 使用容器化特性的 **接口**（调用 Kernel），但不具备跨平台能力
 
-而容器，则是多个容器 **共同使用** 一套物理机 **硬件资源**、**Kernel** 然后从运行所需的 **Lib 库** 层面 进行隔离，因此极大的压榨了物理资源，使物理机物尽其用。
+随后为了实现跨平台，抽出了 [libcontainer](https://linuxcontainers.org/lxc/introduction/) 项目，把 `namespace`、`cgroup` 的操作封装在该项目里，支持不同的平台类型
 
-<img src="./img/容器模型.png">
+### 1.3 容器与虚拟机对比
+
+<img src="./img/为啥使用容器技术.png">
+
+##### 虚拟机：
+
+​ 如 **VMware** 、**PVE**、**ESXi**、**Workstation** 等，多台虚拟机都虚拟出了一套 **不同** 的 **虚拟机器硬件资源**、**Kernel**（内核）、**Lib 库**，然后在上层运行各自的 APP，像是物理机的系统中的子系统一样，从物理虚拟层面进行隔离，占用资源极高
+
+- `Hypervisor:` 一种运行在基础物理服务器和操作系统之间的中间软件层，可允许多个操作系统和应用共享硬件。
+
+##### 容器：
+
+​ 则是多个容器 **共同使用** 一套物理机 **硬件资源**、**Kernel** 然后从运行所需的 **Lib 库** 层面 进行隔离，因此极大的压榨了物理资源，使物理机物尽其用。
+
+- `Container Runtime：` 通过 Linux 内核虚拟化能力管理多个容器，多个容器共享一套操作系统内核。因此 **摘掉了内核占用的空间** 及运行所需要的耗时，使得容器极其轻量与快速。
+
+> 因此，**Docker**用于解决如下需求：
+>
+> - 环境、依赖不一致
+> - 物理硬件资源不够
+> - 快速交付介质，直接交付打包后的 `Docker` 镜像，各平台部署
+> - 跨平台，方便装任何系统，屏蔽平台间差异
+> - 物理资源相互隔离（也可以做到内存、CPU 等资源分配与隔离，但安全性不如虚拟机）
+> - `Docker` 启动多容器生命周期管理
+
+### 1.4 Docker 架构
+
+2015 年 6 月，`Docker` 成立 [OCI](https://opencontainers.org/) （Open Container Initiative 开放容器计划）组织，建立通用标准并由该组织维护 `libcontainer` 项目，后续由从仅包含 `kernel` 的库加入了 **CLI** 工具且改名为 [runC](https://github.com/opencontainers/runc) （运行容器的轻量级工具）
+
+`Docker` 随后做出了架构调整：
+
+<img src="./img/docker架构.png">
+
+将容器运行时相关的程序从 `docker daemon` 剥离出来，形成了 **containerd**
+
+- `containerd：` 屏蔽了 `docker deamon` 底层细节（同时解耦升级后的不兼容），抽象出了一套 `gRPC` 接口
+- `runC:` 上文提到的**CLI**工具， `runC + containerd-shim` 通过 `gRPC` 去调用 `containerd`
+
+<img src="./img/CS架构.png">
+
+因此，`Docker` 演变为了 **CS** 架构的产品
+
+- `Client：` 由 `docker CLI` 通过 `REST API` 调用 `Server` 端服务
+- `Server：` 为 `docker daemon` 守护进程
+
+---
 
 ## 2 安装
 
@@ -198,6 +243,8 @@ wsl --set-default-version 2
 
 **安装完成：**
 ![主界面](./img/docker_desktop.jpg)
+
+---
 
 ## `Dockerfile`
 

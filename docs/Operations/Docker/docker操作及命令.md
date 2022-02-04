@@ -1,9 +1,136 @@
 ---
-title: Docker常用命令
+title: Docker操作及常用命令
 order: 2
 ---
 
-## Docker 常用命令
+# Docker 操作及常用命令
+
+## 1 Docker 基操
+
+### 1.1 核心要素
+
+`Docker`如下三核心：
+
+- **镜像**（Images）：打包了业务代码、运行环境的包，是静态文件，不对外直接提供服务
+- **容器**（Containers）：镜像运行时，对外提供服务
+- **仓库**（Registry）：存放镜像的地方，容器和仓库不会直接交互，都是以镜像为载体
+  - 公有仓库：Docker Hub、阿里、网易... 一般存放以下几类镜像
+    - 操作系统基础镜像：CentOS、Ubuntu、suse、alpine
+    - 中间件：Nginx、Redis、MySQL
+    - 语言编译环境：python、go、rust
+    - 业务镜像：breath-for-code
+  - 私有仓库： 企业内部搭建
+    - Docker Registry：官方提供仓库存储
+    - Harbor：上述封装，WebUI、权限、操作审计等功能（常用）
+
+<img src="./img/核心要素.png">
+
+> **Docker** 执行流程：
+>
+> **docker pull：** `client` 通过 `grpc` 和 `DOCKER_HOST` 通信，`daemon` 进程去`images` 中查看目标镜像，若没有则去远程仓库 `registry` 下载到本地 `images` 中
+>
+> **docker run：** 镜像是静态的，需要容器来运行，因此 `daemon` 会启动一个容器服务运行镜像来对外提供服务
+>
+> **docker build：** 通过 `build` 执行 [DockerFile]() 来自定义的打包自己的镜像
+
+### 1.2 基本流程
+
+1. 查看镜像列表：
+
+   ```sh
+   docker images || docker image ls
+   ```
+
+2. 远程仓库获取镜像：
+
+   ```sh
+   # 从远程仓库拉取 镜像名称：tag标签
+   docker pull nginx:alpine
+
+   #说明：
+   docker pull ubuntu
+   # 等同于
+   docker pull docker.io/library/ubuntu:lastest
+   ```
+
+3. 通过镜像来启动容器：
+
+   ```sh
+   docker run --name z-nginx-alpine -d nginx:alpine
+   ```
+
+4. 进入容器并查看进程：
+
+   ```sh
+   # 进入容器内部，分配一个tty终端
+   docker exec -ti z-nginx-alpine /bin/sh	# or sh or bash
+   ps aux
+
+   # 退出
+   exit
+   ```
+
+5. 本地构建镜像
+
+   - 创建 DockerFile
+
+     `centos-nfs：`
+
+     ```sh
+     # 定义docker使用那个基础系统镜像作为模板，后续命令都已这个基础镜像为准,等同于 pull 操作
+     FROM centos:7.6.1810
+
+     # RUN命令会在模板镜像中执行
+     RUN yum -y install nfs-utils
+
+     # 启动容器后执行如下命令（这就是docker容器启动后执行命令的原因）
+     CMD ["systemctl", "restart", "nfs"]
+     ```
+
+     `ubuntu-nginx：`
+
+     ```sh
+     FROM ubuntu
+
+     RUN apt-get update && apt i -y nginx
+
+     CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+     ```
+
+   - 构建本地镜像:
+
+     ```sh
+     docker build . -t z-nginx:ubuntu -f DockerFile
+     ```
+
+   - 使用新镜像启动
+
+     ```sh
+     docker run --name z-nginx-ubuntu -d z-nginx:ubuntu
+     ```
+
+   - 容器端口转发
+
+     ```sh
+     # 查看 nginx 页面
+     docker exec -ti z-nginx-alpine bash
+     curl localhost
+
+     # 移除容器 并 重启设置端口转发再启动
+     docker rm -f z-nginx-alpine
+     docker run --name z-nginx-alpine -d -p 8080:80 nginx:alpine
+
+     # 查看是否转发（获取到nginx首页）
+     curl localhost:8080
+     ```
+
+6. 删除容器服务
+
+   ```sh
+   docker rm -f z-nginx-ubuntu
+   ```
+
+## 2 Docker 常用命令
 
 可以在官网找到 [所有命令](https://docs.docker.com/reference/)
 
