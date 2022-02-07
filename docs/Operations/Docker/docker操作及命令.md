@@ -130,6 +130,10 @@ order: 2
    docker rm -f z-nginx-ubuntu
    ```
 
+> docker 实际复杂流程如下图：
+
+<img src="./img/基本流程.png">
+
 ## 2 Docker 常用命令
 
 可以在官网找到 [所有命令](https://docs.docker.com/reference/)
