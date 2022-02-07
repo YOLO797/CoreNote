@@ -134,6 +134,8 @@ order: 2
 
 <img src="./img/基本流程.png">
 
+#### 1.3 部署镜像仓库
+
 ## 2 Docker 常用命令
 
 可以在官网找到 [所有命令](https://docs.docker.com/reference/)
