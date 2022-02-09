@@ -130,11 +130,34 @@ order: 2
    docker rm -f z-nginx-ubuntu
    ```
 
+### 1.3 部署镜像仓库
+
 > docker 实际复杂流程如下图：
 
 <img src="./img/基本流程.png">
 
-#### 1.3 部署镜像仓库
+1. 导入镜像到文件中
+
+   ```sh
+   docker save -o zz-nginx-alpine.tar nginx:alpine
+   ```
+
+2. 从文件中加载镜像
+
+   ```sh
+   docker load -i zz-nginx-alpine.tar
+   ```
+
+3. 部署镜像仓库
+
+   https://docs.docker.com/registry/
+
+   ```sh
+   # 使用docker镜像启动仓库服务
+   docker run -d -p 5000:5000 registry registry:2
+   ```
+
+   > 默认仓库不带认证，若需要认证，请参考：[restricting-access](https://docs.docker.com/registry/deploying/#restricting-access)
 
 ## 2 Docker 常用命令
 

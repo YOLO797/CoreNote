@@ -3,7 +3,7 @@ title: yum包
 order: 1
 group:
   title: 包管理工具
-  order: 3
+  order: 2
 ---
 
 # yum 包管理
@@ -133,9 +133,10 @@ Linux 升级命令有两个分别是 yum upgrade 和 yum update, 这个两个命
         wget http://vault.centos.org/7.7.1908/os/Source/SPackages/kernel-3.10.0-957.el7.src.rpm
 
 - 删除之前的内核版本，若有依赖，则一个个删相关依赖
-        rpm -ev kernel-3.10.0-1127.8.2.el7.x86_64
+  rpm -ev kernel-3.10.0-1127.8.2.el7.x86_64
 
         删依赖：rpm -ev kmod-kvdo-6.1.3.7-5.el7.x86_64
+
 - 安装该 rpm 源：
 
         rpm -ivh kernel-3.10.0-957.el7.src.rpm
