@@ -190,3 +190,35 @@ group:
 -
 
 ## 3.命令
+
+##### pdbedit
+
+- 列出当前用户：
+
+  ```sh
+  # 全部用户
+  $ pdbedit -L
+
+  # 指定用户
+  $ pdbedit -L --user=zz
+  ```
+
+- 添加用户：
+
+  ```sh
+  # 无需回车确认输入
+  $ echo -e "12345\n12345\n" | pdbedit -t -a zz
+  ```
+
+- 更新用户：
+
+  ```sh
+  # 也许这只是针对于修改密码
+  $ echo -e "233333\n233333\n" | pdbedit -t -r -u zz
+  ```
+
+- 删除用户：
+
+  ```sh
+  $ pdbedit -x zz
+  ```
