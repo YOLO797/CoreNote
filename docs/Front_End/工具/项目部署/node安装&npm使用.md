@@ -18,21 +18,30 @@ group:
 
 - 1.从官网下下载最新的 nodejs，https://nodejs.org/en/download/
 
-        注意：下载的是Linux Binaries (x64) 二进制
+  ```sh
+  注意：下载的是Linux Binaries (x64) 二进制
+  ```
 
 - 2.通过 ftp 工具上传到 linux 服务，解压安装包
 
-          tar -xvf node-v10.16.0-linux-x64.tar.xz
+      ```sh
+
+  tar -xvf node-v10.16.0-linux-x64.tar.xz
+
+  ````
 
   3、移动并改名文件夹（不改名也行）
 
-          mv node-vxxx-linux-64/ /usr/local/nodejs
+  ```sh
+  mv node-vxxx-linux-64/ /usr/local/nodejs
+  ````
 
   4、让 npm 和 node 命令全局生效
 
-          ln -s /usr/local/nodejs/bin/npm /usr/local/bin/
-          ln -s /usr/local/nodejs/bin/node /usr/local/bin/
-
+  ```sh
+  ln -s /usr/local/nodejs/bin/npm /usr/local/bin/
+  ln -s /usr/local/nodejs/bin/node /usr/local/bin/
+  ```
 
 [注]: 后续安装yarn等其他的配置环境变量，都可以软连接到/usr/loca/bin下
 
@@ -40,12 +49,14 @@ group:
 
 node 安装后默认自带随版本的 npm 包管理器，使用 npm 安装 yarn
 
-    npm install -g yarn
+```sh
+npm install -g yarn
 
-    查看输出命令行显示的yarn安装位置，通常显示为：
-    /usr/local/nodejs/bin/yarn -> /usr/local/nodejs/lib/node_modules/yarn/bin/yarn.js
+查看输出命令行显示的yarn安装位置，通常显示为：
+/usr/local/nodejs/bin/yarn -> /usr/local/nodejs/lib/node_modules/yarn/bin/yarn.js
 
-    ln -s /usr/local/nodejs/bin/yarn /usr/local/bin/
+ln -s /usr/local/nodejs/bin/yarn /usr/local/bin/
+```
 
 ## 二、npm
 
@@ -92,9 +103,9 @@ NodeJs 的默认包管理器，用于安装和发布软件
 以导入 jq 为例:
 
 - 1.以前原始的导入方式是原生导入
-        <script src="./node_modules/jquery/dist/jquery.min.js"/>
+  <script src="./node_modules/jquery/dist/jquery.min.js"/>
 - 2.使用 npm 则可以
-        const $ = require("jquery") // npm安装 可直接从 node_modules 中自动找到jquery
+  const $ = require("jquery") // npm 安装 可直接从 node_modules 中自动找到 jquery
 
         const foo = rquire("./func.js") // 导入js文件下的函数 后缀可不写
 

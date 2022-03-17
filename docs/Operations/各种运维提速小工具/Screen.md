@@ -65,3 +65,18 @@ group:
     screen -ls	# 查看进程id号
     screen -r -d 1805	# 进入id为 1805 的 screen 进程
     ```
+
+- 中断进程：
+
+  - 进入后中断：
+
+    ```sh
+    screen -r 30339		# 进入要中断的screen
+    exit # 或contorl + c 退出 screen
+    ```
+
+  - 直接中断：
+
+    ```sh
+    screen -S screenID -X quit
+    ```
