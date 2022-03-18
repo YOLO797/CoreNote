@@ -1,5 +1,6 @@
 ---
 title: 组件库说明
+order: 1
 
 group:
   title: 胖酱の组件库

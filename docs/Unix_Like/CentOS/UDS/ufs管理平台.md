@@ -1,9 +1,9 @@
 ---
-title: UFS快捷命令
+title: ufs 快捷命令
 order: 1
 
 group:
-  title: UFS管理平台
+  title: UDS管理平台
   order: 3
 ---
 

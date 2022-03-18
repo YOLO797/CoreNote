@@ -189,9 +189,25 @@ group:
 
 -
 
-## 3.命令
+## 3. 命令
 
-##### pdbedit
+##### 清除 Window 下 samba 的缓存
+
+- 查看缓存列表
+
+  ```powershell
+  $ net use
+  ```
+
+- 删除所有缓存
+
+  ```powershell
+  $ net use * /del
+  ```
+
+  > 再去 任务管理器 - 重启文件资源管理器，确保刷新
+
+##### pdbedit 操作用户
 
 - 列出当前用户：
 
