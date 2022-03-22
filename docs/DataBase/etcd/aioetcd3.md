@@ -9,13 +9,19 @@ order: 4
 
 - [github|aioetcd3](https://github.com/gaopeiliang/aioetcd3)
 
-## 安装
+### 安装
 
 ```bash
 pip install aioetcd3
 ```
 
-## 简单封装
+### 1. 使用参考
+
+#### 1.1 开源参考
+
+[server](https://github.com/matrixji/eha/blob/master/eha/agent/server.py)
+
+#### 1.2 简单封装
 
 ```python
 from pathlib import Path
