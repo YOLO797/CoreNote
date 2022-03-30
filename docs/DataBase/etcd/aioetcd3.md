@@ -5,14 +5,16 @@ order: 4
 
 # aioetcd3
 
-<Alert type="warning">异步 etcd 库使用了 V3 的 API，该库使用了 grpc，底层实现存在较多局限与不合理，需魔改</Alert>
+<Alert type="warning">异步 etcd 库使用了 V3 的 API，该库引用了 [aiogrpc](https://github.com/hubo1016/aiogrpc) 这个第三方老库，来实现异步的**grpc**，因此存在些许局限，需魔改</Alert>
 
 - [github|aioetcd3](https://github.com/gaopeiliang/aioetcd3)
+- 引用库 [aiogrpc](https://github.com/hubo1016/aiogrpc) 使用 `__anext__`、`loop.call_soon_threadsafe` 、`run_in_executor` 等实现
+- 新版本官方已推出 [grpc.aio](/back_end/python/生态/rpc/grpc)
 
 ### 安装
 
 ```bash
-pip install aioetcd3
+$ pip install aioetcd3
 ```
 
 ### 1. 使用参考
@@ -78,3 +80,9 @@ def get_db():
 ```
 
 启动时读`json`文件的`endpoints`地址到内存。单例，未开连接池，过于简陋的封装
+
+### 2. 分布式锁
+
+```python
+
+```

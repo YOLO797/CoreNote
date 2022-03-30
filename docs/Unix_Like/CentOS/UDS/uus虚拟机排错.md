@@ -42,6 +42,22 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 ### 2. 使用 UUS 虚拟机的限制
 
+##### 2. -1 不使用 UUS：
+
+> 既然不好用，为什么要用呢？
+
+- **卸载命令**：
+
+  ```sh
+  # 干掉服务
+  for i in `ls /usr/lib/uraid/scripts/init/`;do systemctl disable --now $i;done
+
+  # 干掉uraid
+  rm -rf /usr/lib/uraid;rm -rf /etc/sysconfig/uraid
+  ```
+
+---
+
 由于 `uus` 在虚拟机上运行有诸多的限制，在此将 uus 虚拟机的限制在此列出：
 
 ##### 2.1 serial number

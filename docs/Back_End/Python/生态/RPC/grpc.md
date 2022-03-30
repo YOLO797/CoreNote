@@ -28,3 +28,9 @@ group:
 ##### 1.4 开源引用
 
 [aioetcd3](/data-base/etcd/aioetcd3) 使用老版本的非 `aio` 异步，基于线程实现的库
+
+##### 1.5 Python 文档
+
+[gRPC Python’s documentation](https://grpc.github.io/grpc/python/index.html) 此 **API 是稳定** 的
+
+[grpc (github.com)](https://github.com/grpc/grpc/tree/master/src/python/grpcio) 需要 `python >= 3.6`

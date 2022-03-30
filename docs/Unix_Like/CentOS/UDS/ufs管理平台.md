@@ -111,11 +111,46 @@ group:
 
 #### 1.4 MSS 服务相关
 
--
+##### 解决 `MSS` 无法启动问题
+
+- `-a` 参数
+
+  ```sh
+  ufsmetaserver restart -a
+
+  # 然后再执行 stop，并去管理平台手动启动
+  ufsmetaserver stop
+  ```
+
+- `test` 参数
+
+  ```sh
+  查看 ufsmetaserver 当前情况
+  ```
+
+- `-f` 参数
+
+  ```sh
+  # 查看服务错误日志
+  ufsmetaserver -f
+  ```
+
+> **备注**： 终极解决办法: `ufsmeatserver -e`
+>
+> 此方式会将所有 `meta`、`chunk` 都重新启动，可能会导致丢数据！！！！
+>
+> 仅有十分十分特殊情况下，也应该先确认，再使用
 
 #### 1.5 CSS 服务相关
 
--
+##### 解决 `CSS` 无法启动问题
+
+- `-f` 参数
+
+  ```sh
+  # 查看服务错误日志
+  ufschunkserver -f
+  ```
 
 #### 1.x 挂载相关
 
@@ -151,6 +186,13 @@ group:
   $ watch -n 1 "ip a"
   ```
 
+- 秒 `ping` IP
+
+  ```sh
+  # 目前用于高可用检测网卡是否ping通，由于上锁同步导致至少需1s
+  ping 192.16.120.175 -c 1 -t 1 -W 1
+  ```
+
 - 添加网卡 IP
 
   ```sh
@@ -175,3 +217,15 @@ group:
   $ ip link set eth1 down
   $ ip link set eth1 up
   ```
+
+---
+
+### 3. 基础排错相关
+
+#### 3.1 基础服务无法启动
+
+- `systemctl` 无法启动
+
+  > 例: `systemctl restart smb.service` 无法启动
+
+-
