@@ -10,7 +10,11 @@ group:
 
 ## 一、简介
 
-etcd 是一个高可用的分布式键值(key-value)数据库。etcd 内部采用 raft 协议作为一致性算法，etcd 基于 Go 语言实现。
+**etcd**：是一个高可用的 **分布式键值(key-value)** 数据库。内部采用 `Raft` 协议作为一致性算法，基于 Go 语言实现，
+
+##### 客户端接入
+
+**etcd** 使用 `gRPC` 对外提供 **API**，
 
 提供配置共享和服务发现的系统比较多，其中最为大家熟知的是[Zookeeper]（后文简称 ZK），而 ETCD 可以算得上是后起之秀了。
 在项目实现，一致性协议易理解性，运维，安全等多个维度上，ETCD 相比 Zookeeper 都占据优势。
@@ -84,6 +88,7 @@ ETCD 使用 Raft 协议来维护集群内各个节点状态的一致性。
 - 这一组服务节点构成一个集群，并且有一个主节点来对外提供服务。
 
 - 当集群初始化，或者主节点挂掉后，面临一个选主问题。集群中每个节点，任意时刻处于 Leader, Follower, Candidate 这三个角色之一。选举特点如下：
+
   - 当集群初始化时候，每个节点都是 Follower 角色；
 
   - 当 Follower 在一定时间内没有收到来自主节点的心跳，会将自己角色改变为 Candidate，并发起一次选主投票；当收到包括自己在内超过半
@@ -276,16 +281,14 @@ etcd 在生产环境中一般推荐集群方式部署。在这里，主要讲讲
 
 - 设定 etcd 配置文件
   建立相关目录
-        $ mkdir -p /var/lib/etcd/
-        $ mkdir -p /opt/etcd/config/
+  $ mkdir -p /var/lib/etcd/
+  $ mkdir -p /opt/etcd/config/
 
 - 创建 etcd 配置文件
-        $ cat <<EOF | sudo tee /opt/etcd/config/etcd.conf
-        #节点名称
-        ETCD_NAME=$(hostname -s)
-        #数据存放位置
-        ETCD_DATA_DIR=/var/lib/etcd
-        EOF
+  $ cat <<EOF | sudo tee /opt/etcd/config/etcd.conf #节点名称
+  ETCD_NAME=$(hostname -s) #数据存放位置
+  ETCD_DATA_DIR=/var/lib/etcd
+  EOF
 - 创建 systemd 配置文件
 
         $ cat <<EOF | sudo tee /etc/systemd/system/etcd.service
@@ -541,28 +544,3 @@ etcdctl 支持的命令大体上分为数据库操作和非数据库操作两类
 
         $ etcdctl member add etcd3 http://192.168.1.100:2380
         Added member named etcd3 with ID 8e9e05c52164694d to cluster
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

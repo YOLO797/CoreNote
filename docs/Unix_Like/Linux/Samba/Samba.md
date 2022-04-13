@@ -18,6 +18,12 @@ group:
 
 ### 安装
 
+- CentOS 下安装客户端
+
+  ```
+
+  ```
+
 ### 配置
 
 <Alert type="info">通常在 `/etc/samba/smb.conf` 文件中指定**日志**文件名称和**共享**存放路径</Alert>
@@ -193,10 +199,19 @@ group:
 
 ##### 基本的挂载、卸载
 
+- 基本挂载
+
+  ```sh
+  # 通过IP挂载
+  $ mount -t cifs //172.16.120./test /mnt/uit-share02/
+  $ Password for root@//10.10.10.223/test
+
+  ```
+
 - 强制卸载
 
   ```sh
-  umount -f -a -t cifs -l /挂载点
+  $ umount -f -a -t cifs -l /挂载点
   ```
 
 ##### 清除 Window 下 samba 的缓存

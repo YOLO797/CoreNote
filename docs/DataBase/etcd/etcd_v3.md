@@ -27,7 +27,6 @@ etcd3 没有 ls 使用 get 替代
 
         ETCDCTL_API=3 etcdctl get /
 
-
 例如：
 
 - 查询所有 key 或 value :
@@ -52,5 +51,13 @@ etcd3 没有 ls 使用 get 替代
 
         $ etcdctl put test hello
 
-
 参考：https://github.com/coreos/etcd/issues/6904
+
+#### 环境变量：
+
+```sh
+# etcd v3 环境变量
+export ETCDCTL_WRITE_OUT="table"
+export ETCDCTL_API=3
+export ETCDCTL_ENDPOINTS="172.16.120.141:22379,172.16.120.142:22379,172.16.120.143:22379"
+```
