@@ -2,7 +2,7 @@
 title: CPU
 order: 1
 group:
-  title: 计算机硬件组成
+  title: 计算机硬件基础
   order: 1
 ---
 

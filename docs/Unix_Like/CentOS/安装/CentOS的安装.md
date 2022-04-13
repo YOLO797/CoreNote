@@ -3,7 +3,7 @@ title: CentOS安装及配置
 order: 1
 group:
   title: 类Unix系统
-  order: 1
+  order: 31
 ---
 
 # CentOS 的配置问题
@@ -41,8 +41,7 @@ group:
 
 - 因此要做的是绑定固定 ip，设置开机自启动网卡【注意】：192.168.21.0 是子网 ip，被占了， 192.168.21.1 应该会被 windows 占掉所以要配个
   其他的 ip 地址: - ip 地址：
-              IPADDR=192.168.21.81
-      - 子网掩码：
+  IPADDR=192.168.21.81 - 子网掩码：
 
               NETMASK=255.255.255.0
       - 网关地址：
@@ -51,6 +50,7 @@ group:
       - DNS服务器：（可配置多个）
 
               DNS1=114.114.114.114
+
 - 需要 cd 到网卡目录：
 
         vi /etc/sysconfig/network-scripts/ifcfg-eth0    or ifcfg-ens33
@@ -58,11 +58,11 @@ group:
 - 修改如下选项：
 
   - BOOTPROTO
-          BOOTPROTO=none  # 将dhcp动态获取改为none
+    BOOTPROTO=none # 将 dhcp 动态获取改为 none
   - ONBOOT
-          ONBOOT=yes   # 将 no改为yes 应该是开机跟随boot启动
+    ONBOOT=yes # 将 no 改为 yes 应该是开机跟随 boot 启动
   - UUID：
-          这个直接把这一行给干掉
+    这个直接把这一行给干掉
   - 然后加上上文的选项
 
 - 保存文件，重启网卡

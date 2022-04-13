@@ -7,8 +7,8 @@ nav:
   children:
     - title: 计算机工作原理
       path: /soul/计算机工作原理/概述
-    - title: JavaScript
-      path: /soul/js/5_link
+    - title: JS数据结构
+      path: /soul/js数据结构/1_stack
   order: 4
 
 features:
@@ -17,9 +17,9 @@ features:
     link: /soul/计算机工作原理/概述
     desc: 黑盒速速透明
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/3863e74a-7870-4874-b1e1-00a8cdf47684/kj9t7ww3_w144_h144.png
-    title: JS
-    desc: JS算法、数据结构
-    link: /soul/js/5_link
+    title: JS数据结构
+    desc: JS数据结构
+    link: /soul/js数据结构/1_stack
 #   - icon: https://pbs.twimg.com/profile_images/1285653263824691205/mu4nJ7Gb_normal.png
 #     title: Redis
 #     desc: 缓存数据库、预读

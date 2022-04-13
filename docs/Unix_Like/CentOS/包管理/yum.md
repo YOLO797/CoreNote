@@ -3,7 +3,7 @@ title: yum包
 order: 1
 group:
   title: 包管理工具
-  order: 2
+  order: 32
 ---
 
 # yum 包管理

@@ -3,7 +3,7 @@ title: 认识Ubuntu系统
 order: 2
 group:
   title: Ubuntu系统
-  order: 21
+  order: 41
 ---
 
 Ubuntu: 注 上篇记录的博客大概是 linux 和旗下 redhat 适用的 有些 ubuntu 稍有区别 更详细的在博客中浏览 这里只为温故有印象（已废弃，改！！）
