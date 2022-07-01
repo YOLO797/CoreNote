@@ -8,7 +8,7 @@ nav:
     - title: 硬件基础
       path: /unix_like/硬件基础/CPU
     - title: Linux
-      path: /unix_like/linux/常用命令
+      path: /unix_like/linux/linux基础指引
     - title: CentOS
       path: /unix_like/cent-os/安装
     - title: Ubuntu
@@ -25,7 +25,7 @@ features:
   - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/linux.png
     title: Linux
     desc: Linux系统相关
-    link: /unix_like/linux/常用命令
+    link: /unix_like/linux/linux基础指引
   - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/centos.png
     title: CentOS
     desc: CentOS系统相关

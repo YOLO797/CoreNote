@@ -1,13 +1,13 @@
 ---
-title: 论CPU
+title: 解构CPU
 order: 2
 ---
 
-# 论 CPU
+# 解构 CPU 原理
 
 <Alert type="miku">计算机世界中，万物起源于<Font type="queen">进制</Font></Alert>
 
-## 1. 论编码与通信
+## 1. 编码与通信
 
 <Alert type="error"> 渴望交流是人类最主要的天性之一，你能想到那些方式实现信息的交换？</Alert>
 
