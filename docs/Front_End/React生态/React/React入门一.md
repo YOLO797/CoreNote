@@ -108,10 +108,11 @@ $ npm start
 
 ##### **2.2.1 初始化 - Initialization**
 
-```react
+```ts
 import React, { Component } from 'react';
 
-class Test extends Component {	// 继承了React.Compoent 才获得生命周期和对应能力
+class Test extends Component {
+  // 继承了React.Compoent 才获得生命周期和对应能力
   constructor(props) {
     super(props);
   }
@@ -137,20 +138,21 @@ class Test extends Component {	// 继承了React.Compoent 才获得生命周期�
 
    - 在 `componentWillReceiveProps` 方法中，将 `props` 转换成自己的 `state`
 
-     ```react
+     ```ts
      class Child extends Component {
-         constructor(props) {
-             super(props);
-             this.state = {
-                 someThings: props.someThings
-             };
-         }
-         componentWillReceiveProps(nextProps) { // 父组件重传 props 时就会调用这个方法
-             this.setState({someThings: nextProps.someThings});
-         }
-         render() {
-             return <div>{this.state.someThings}</div>
-         }
+       constructor(props) {
+         super(props);
+         this.state = {
+           someThings: props.someThings,
+         };
+       }
+       componentWillReceiveProps(nextProps) {
+         // 父组件重传 props 时就会调用这个方法
+         this.setState({ someThings: nextProps.someThings });
+       }
+       render() {
+         return <div>{this.state.someThings}</div>;
+       }
      }
      // 不会二次渲染指的是:
      // 每次子组件接收到新的props，都会重新渲染一次
@@ -161,31 +163,32 @@ class Test extends Component {	// 继承了React.Compoent 才获得生命周期�
 
    - 如上情况可通过 `shouldComponentUpdate` 优化：
 
-     ```react
+     ```ts
      class Child extends Component {
-        constructor(props) {
-             super(props);
-             this.state = {
-               someThings:1
-             }
-        }
-        // 使用这个方法，阻止渲染，否则 state 是否有变化都将会导致组件重新渲染
-        shouldComponentUpdate(nextStates){
-             if(nextStates.someThings === this.state.someThings){
-               return false
-             }
+       constructor(props) {
+         super(props);
+         this.state = {
+           someThings: 1,
+         };
+       }
+       // 使用这个方法，阻止渲染，否则 state 是否有变化都将会导致组件重新渲染
+       shouldComponentUpdate(nextStates) {
+         if (nextStates.someThings === this.state.someThings) {
+           return false;
          }
+       }
 
-        handleClick = () => { // 虽然调用了setState ，但state并无变化
-             const preSomeThings = this.state.someThings
-              this.setState({
-                 someThings: preSomeThings
-              })
-        }
+       handleClick = () => {
+         // 虽然调用了setState ，但state并无变化
+         const preSomeThings = this.state.someThings;
+         this.setState({
+           someThings: preSomeThings,
+         });
+       };
 
-         render() {
-             return <div onClick = {this.handleClick}>{this.state.someThings}</div>
-         }
+       render() {
+         return <div onClick={this.handleClick}>{this.state.someThings}</div>;
+       }
      }
      ```
 
