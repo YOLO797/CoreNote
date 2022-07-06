@@ -120,13 +120,16 @@ class Test extends Component {
 ```
 
 - `constructor()`：构造方法，初始化工作
+
+  > 只要使用了`constructor()` 就必须写 `super()`，否则 **会导致 this 指向错误**
+
 - `super(props)`：调用基类的构造方法，同时将父组件的 `props` 注入子组件
 
 **2.2.2 挂载 - Mounting**
 
-- `componentWillMount`：组件挂载到 `DOM` 前，只调用一次，此时调用 `this.setState` 不会触发 `render`
+- `componentWillMount`：组件挂载到 `DOM` 前，只调用一次，此时调用 `this.setState` 不会触发 `render`，较少使用（若 `setState` 比 `render` 慢，则会白屏，需要加 `loading` 提高用户体验）
 - `render`：比较 `props` 和 `state`，返回一个 `react` 元素。不负责实际渲染工作，由 `React` 自身渲染出页面 `DOM`。纯函数，不能再其中执行 `this.setState`
-- `componentDidMount`：挂载后调用，仅一次
+- `componentDidMount`：挂载后调用，此时 `DOM` 节点已生成，仅一次。可调用 `ajax` 请求，返回数据后组件会重新渲染
 
 **2.2.3 更新 - Update**
 
@@ -192,12 +195,15 @@ class Test extends Component {
      }
      ```
 
-- `componentWillReceiveProps(nextProps)`：只调用于 `props` 引起的组件更新过程中，响应 Props 变化之后进行更新的唯一方式，参数 `nextProps` 是父组件传给当前组件的新 `props`
-
+- `componentWillReceiveProps(nextProps)`：只调用于 `props` 引起的组件更新过程中，响应 `props` 变化之后进行更新的唯一方式，参数 `nextProps` 是父组件传给当前组件的新 `props`，接受父组件改变后的 `props` 需要重新渲染组件时用到的比较多
 - `shouldComponentUpdate(nextProps, nextState)`：比较 `nextProps`，`nextState` 及当前组件的`this.props`，`this.state`，返回 **true** 则继续执行更新过程，返回 **false** 则当前组件更新停止
-  - 此过程中执行 [diff 算法]() ：给定两棵树，找最少转化步骤，按层 `diff`，不移动只删除
+  - 若存在该调用，则先判断是否有拦截，
+  - 由于父组件重新渲染，会导致所有子组件更新，为防止子组件更新，可在子组件的该生命周期中限制
 - `componentWillUpdate(nextProps, nextState)`：处理组件前更新的工作，很少使用
-- `render`：
+- `render`：上述同
+
+  - 之后 `vdom` 会执行 [diff 算法]() ：给定两棵树，找最少转化步骤，按层 `diff`，不移动只删除
+
 - `componentDidUpdate(prevProps, prevState)`：更新后调用，可以操作组件更新的 `DOM`，`prevProps` 和 `prevState` 参数指组件更新前的值
 
 **2.2.3 卸载 - Unmounting**
@@ -208,6 +214,10 @@ class Test extends Component {
   - 取消网络请求
   - 清内存
   - 清除 `componentDidMount` 手动创建的 `DOM` 元素等
+
+整体流程图如下：
+
+<img src="./image/React生命周期执行流程.jpg">
 
 #### 2.2 Fiber
 
