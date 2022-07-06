@@ -8,6 +8,8 @@ group:
 
 # React 框架
 
+[React 中文文档](https://zh-hans.reactjs.org/)
+
 ### 1. React 简介
 
 #### 1.1 历史背景：
@@ -21,14 +23,14 @@ group:
 
 > **React** 其实很简单，特性如下：
 
-##### 整体刷新页面：
+##### **整体刷新页面**：
 
 - 如: `append` 一个消息，`DOM` 上增加一个 `<li>message</li>`
   - 原生做法，需要修改时操作父级 `DOM`，判断子 `DOM` 是否增加，和增加到了那里
   - 使用`React`，只用关心整体状态，之前是 2 条消息 -> 后面是 3 条消息 整体改变状态即可
 - **好处**：不用关心 `DOM` 细节
 
-##### 组件概念：
+##### **组件概念**：
 
 > 组件：将整个 `UI` 拆分成一块块组件，页面由多个组件搭积木，拼合而成
 
@@ -50,7 +52,7 @@ group:
   - 若组件复杂，则拆分
     - 大组件，一个变化，整体组件都要刷新，若拆分成小组件，则只需小组件内部刷新
 
-##### 单向数据流：
+##### **单向数据流**：
 
 > 传统 `MVC` 是一个 `Controller` 绑定了大量的 `Model`，而且每个 `Model` 还绑定了各种 `View`
 
@@ -73,9 +75,9 @@ group:
 - 能计算得到的状态，就不要单独存储
 - 组件尽量无状态，所需数据通过 `props` 获取
 
-##### 4 个必须 API：
+##### **4 个必须 API**：
 
-##### 完善的错误提示：
+##### **完善的错误提示**：
 
 ### 1.3 JSX：
 
@@ -85,40 +87,125 @@ group:
 
 <img src="./image/JSX.jpg">
 
-##### 安装：
+### 1.3 安装：
 
-```sh
+**安装：**
+
+```shell
 $ npm install -g create-react-app
 $ create-react-app my-app
 $ cd my-app
 $ npm start
 ```
 
-####
+### 2. React 生命周期：
 
-    文件目录结构
-        node_modules    --这里面包含了react项目中会用到的一些组件，install的时候下载下来的
-        public/index.html   --包含了项目中的启动页面，react比较适合单页面项目应用开发，所以暂时只包含一个index.html，react工程的入口页面
-        src/index.js    --包含了一些我们自己使用的js文件，css文件，img文件等等。不要管什么app.js，你就看到index.js即可，系统默认将index.html
-                          对准了index.js，index.js也就是我们的入口js，他和index.html所对应。
+#### 2.1 React v16 前
 
-        这样不好理解，因此可以变换为
-        /public
-            - index.html
-        /src
-            -css
-            -img
-            -js
-            index.jx
-        注：可以删除或重命名其他文件。
+> **注**：函数组件没有调用如下生命周期方法的能力
 
-    参考：
-        http://www.ruanyifeng.com/blog/2016/09/react-technology-stack.html
-        https://doc.react-china.org/docs/state-and-lifecycle.html
+<img src="./image/react16前生命周期.jpg">
 
-个生命周期）
+##### **2.2.1 初始化 - Initialization**
 
-    0.注意 componentWillUnmount() 组件被卸载和销毁之前立即调用 此方法中执行任何必要的清理，例如使计时器无效、取消网络请求或清除在组件
-    1.componentWillReceiveProps() 当组件传入的 props 发生变化时调用，但父组件进行render 此生命周期仍然调用
-    2.shouldComponentUpdate() 中执行diff算法。（给定两棵树，找到最少转换步骤）原始O(n^3)，现在O(n) 不遍历整棵树，按层diff，不移动只删，
-        若遍历到不同结点则不再后续遍历，直接删除不同结点。
+```react
+import React, { Component } from 'react';
+
+class Test extends Component {	// 继承了React.Compoent 才获得生命周期和对应能力
+  constructor(props) {
+    super(props);
+  }
+}
+```
+
+- `constructor()`：构造方法，初始化工作
+- `super(props)`：调用基类的构造方法，同时将父组件的 `props` 注入子组件
+
+**2.2.2 挂载 - Mounting**
+
+- `componentWillMount`：组件挂载到 `DOM` 前，只调用一次，此时调用 `this.setState` 不会触发 `render`
+- `render`：比较 `props` 和 `state`，返回一个 `react` 元素。不负责实际渲染工作，由 `React` 自身渲染出页面 `DOM`。纯函数，不能再其中执行 `this.setState`
+- `componentDidMount`：挂载后调用，仅一次
+
+**2.2.3 更新 - Update**
+
+**造成组件更新的有两类（三种）情况**：
+
+1. 父组件重新 `render`
+
+   - 每当父组件重新 `render` ，都会重传 `props` ，导致子组件重新渲染
+
+   - 在 `componentWillReceiveProps` 方法中，将 `props` 转换成自己的 `state`
+
+     ```react
+     class Child extends Component {
+         constructor(props) {
+             super(props);
+             this.state = {
+                 someThings: props.someThings
+             };
+         }
+         componentWillReceiveProps(nextProps) { // 父组件重传 props 时就会调用这个方法
+             this.setState({someThings: nextProps.someThings});
+         }
+         render() {
+             return <div>{this.state.someThings}</div>
+         }
+     }
+     // 不会二次渲染指的是:
+     // 每次子组件接收到新的props，都会重新渲染一次
+     // 但可以在渲染前，通过 componentWillReceiveProps 将 state 更新，此时只渲染更新state的一次，不会再二次渲染props的那次，对性能有利
+     ```
+
+2. 组件本身调用了 `setState`，无论 `state` 有没有变化
+
+   - 如上情况可通过 `shouldComponentUpdate` 优化：
+
+     ```react
+     class Child extends Component {
+        constructor(props) {
+             super(props);
+             this.state = {
+               someThings:1
+             }
+        }
+        // 使用这个方法，阻止渲染，否则 state 是否有变化都将会导致组件重新渲染
+        shouldComponentUpdate(nextStates){
+             if(nextStates.someThings === this.state.someThings){
+               return false
+             }
+         }
+
+        handleClick = () => { // 虽然调用了setState ，但state并无变化
+             const preSomeThings = this.state.someThings
+              this.setState({
+                 someThings: preSomeThings
+              })
+        }
+
+         render() {
+             return <div onClick = {this.handleClick}>{this.state.someThings}</div>
+         }
+     }
+     ```
+
+- `componentWillReceiveProps(nextProps)`：只调用于 `props` 引起的组件更新过程中，响应 Props 变化之后进行更新的唯一方式，参数 `nextProps` 是父组件传给当前组件的新 `props`
+
+- `shouldComponentUpdate(nextProps, nextState)`：比较 `nextProps`，`nextState` 及当前组件的`this.props`，`this.state`，返回 **true** 则继续执行更新过程，返回 **false** 则当前组件更新停止
+  - 此过程中执行 [diff 算法]() ：给定两棵树，找最少转化步骤，按层 `diff`，不移动只删除
+- `componentWillUpdate(nextProps, nextState)`：处理组件前更新的工作，很少使用
+- `render`：
+- `componentDidUpdate(prevProps, prevState)`：更新后调用，可以操作组件更新的 `DOM`，`prevProps` 和 `prevState` 参数指组件更新前的值
+
+**2.2.3 卸载 - Unmounting**
+
+- `componentWillUnmount`：在组件被卸载前调用，可以在这里执行一些清理工作，避免内存泄露，比如：
+
+  - 清除定时器
+  - 取消网络请求
+  - 清内存
+  - 清除 `componentDidMount` 手动创建的 `DOM` 元素等
+
+#### 2.2 Fiber
+
+[Fiber 架构](/front_end/react生态/react/fiber)
