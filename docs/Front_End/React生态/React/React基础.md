@@ -10,16 +10,16 @@ group:
 
 [React 中文文档](https://zh-hans.reactjs.org/)
 
-### 1. React 简介
+## 1. React 简介
 
-#### 1.1 历史背景：
+### 1.1 历史背景
 
 **React** 是当时 `facebook` 为了解决如下问题：
 
 - 传统 `UI` 操作关注大量细节 （**JQ** 需要熟悉各种 `API` 才能操纵 `DOM`）
 - 应用程序状态分散在各处，难以维护，随着项目不断复杂化，导致改个小需求，`bug` 频发
 
-### 1.2 特性：
+### 1.2 特性
 
 > **React** 其实很简单，特性如下：
 
@@ -43,8 +43,8 @@ group:
   - 传入的（通过 `props` 传进来）
   - 内部维护的（内部发生事件，让外部知道变化）
 
-- 组件一般不提供方法，而是某种状态机*（状态是什么，结果就是什么）*
-- 可理解为纯函数：输入的是什么，那么输出的结果一定是什么
+- 组件一般不提供方法，而是某种状态机 (_状态是什么，结果就是什么_)
+- 可理解为 **纯函数**：输入的是什么，那么输出的结果一定是什么
 - 单向数据绑定
 
 - 单一职责原则：
@@ -62,7 +62,7 @@ group:
 
 <img src="./image/单向数据流.jpg">
 
-**React** 只关注于状态，如图：是 **Flux 架构** ，一种 **设计模式**，但非完整实现
+**React** 只关注于状态，如图：是 **Flux 架构** ，一种 **设计模式**，而非完整实现
 
 - `View` 上发生了操作
 - `->` 产生 `Action`
@@ -79,7 +79,7 @@ group:
 
 ##### **完善的错误提示**：
 
-### 1.3 JSX：
+### 1.3 JSX
 
 **JSX 表达式**
 
@@ -87,7 +87,7 @@ group:
 
 <img src="./image/JSX.jpg">
 
-### 1.3 安装：
+### 1.4 安装
 
 **安装：**
 
@@ -98,15 +98,17 @@ $ cd my-app
 $ npm start
 ```
 
-### 2. React 生命周期：
+---
 
-#### 2.1 React v16 前
+## 2. React 生命周期
+
+### 2.1 React v16 前
 
 > **注**：函数组件没有调用如下生命周期方法的能力
 
 <img src="./image/react16前生命周期.jpg">
 
-##### **2.2.1 初始化 - Initialization**
+#### **2.2.1 初始化 - Initialization**
 
 ```ts
 import React, { Component } from 'react';
@@ -125,13 +127,13 @@ class Test extends Component {
 
 - `super(props)`：调用基类的构造方法，同时将父组件的 `props` 注入子组件
 
-**2.2.2 挂载 - Mounting**
+#### **2.2.2 挂载 - Mounting**
 
 - `componentWillMount`：组件挂载到 `DOM` 前，只调用一次，此时调用 `this.setState` 不会触发 `render`，较少使用（若 `setState` 比 `render` 慢，则会白屏，需要加 `loading` 提高用户体验）
 - `render`：比较 `props` 和 `state`，返回一个 `react` 元素。不负责实际渲染工作，由 `React` 自身渲染出页面 `DOM`。纯函数，不能再其中执行 `this.setState`
-- `componentDidMount`：挂载后调用，此时 `DOM` 节点已生成，仅一次。可调用 `ajax` 请求，返回数据后组件会重新渲染
+- `componentDidMount`：挂载后调用，此时 `DOM` 节点已生成（`UI` 渲染已完成），仅一次。可调用 `ajax` 请求，返回数据后组件会重新渲染
 
-**2.2.3 更新 - Update**
+#### **2.2.3 更新 - Update**
 
 **造成组件更新的有两类（三种）情况**：
 
@@ -197,8 +199,9 @@ class Test extends Component {
 
 - `componentWillReceiveProps(nextProps)`：只调用于 `props` 引起的组件更新过程中，响应 `props` 变化之后进行更新的唯一方式，参数 `nextProps` 是父组件传给当前组件的新 `props`，接受父组件改变后的 `props` 需要重新渲染组件时用到的比较多
 - `shouldComponentUpdate(nextProps, nextState)`：比较 `nextProps`，`nextState` 及当前组件的`this.props`，`this.state`，返回 **true** 则继续执行更新过程，返回 **false** 则当前组件更新停止
-  - 若存在该调用，则先判断是否有拦截，
+  - 若存在该调用，则先判断是否有拦截，它决定了 `vdom` 是否需要重绘
   - 由于父组件重新渲染，会导致所有子组件更新，为防止子组件更新，可在子组件的该生命周期中限制
+  - 常用于性能优化，通常不用自己实现，`PureComponent` 自动实现
 - `componentWillUpdate(nextProps, nextState)`：处理组件前更新的工作，很少使用
 - `render`：上述同
 
@@ -206,7 +209,7 @@ class Test extends Component {
 
 - `componentDidUpdate(prevProps, prevState)`：更新后调用，可以操作组件更新的 `DOM`，`prevProps` 和 `prevState` 参数指组件更新前的值
 
-**2.2.3 卸载 - Unmounting**
+#### **2.2.3 卸载 - Unmounting**
 
 - `componentWillUnmount`：在组件被卸载前调用，可以在这里执行一些清理工作，避免内存泄露，比如：
 
@@ -219,6 +222,67 @@ class Test extends Component {
 
 <img src="./image/React生命周期执行流程.jpg">
 
-#### 2.2 Fiber
+### 2.2 Fiber
 
 [Fiber 架构](/front_end/react生态/react/fiber)
+
+### 2.3 React v16 后
+
+> 由于 `v16` 前，在 **Fiber** 架构推出之后，就不适用了。如果要开启 `async rendering` ，在 `reader` 函数之前的所有函数，都有可能被执行多次：
+>
+> - `componentWillMount`
+> - `componentWillReceiveProps`
+> - `shouldComponentUpdate`
+> - `componentWillUpdate`
+>
+> 由于异步分片，多次执行明显不符合预期，禁用也不合适。因此除 `shouldComponentUpdate` 外（_由于无副作用_），都被 `getDerivedStateFromProps` 所替代，强制开发者在 `render` 之前只做无副作用操作
+
+如图，是 `React v16.4+` 版本后的生命周期：
+
+<img src="./image/react16.4后生命周期.jpg">
+
+- `static getDerivedStateFromProps(props, state)`：在组件创建时和更新时的 `render` 方法之前调用，应返回一个对象更新状态，或者返回 `null` 不更新任何内容
+
+  - `static` 表明静态方法，避免被 `react` 忽略
+  - 内部的 `this` 为 `undefined` ，静态无法访问 `class` 实例的 `this` _（类比 `py`静态不能用 `self` 一样）_
+
+- `getSnapshotBeforeUpdate`：`render` 之后调用，可以读取 `DOM`，但无法使用
+
+  - 如：改 `DOM` 之前获取滚动位置
+
+  - 改生命周期返回的任何值，都将作为参数传递给 `componentDidUpdate`，意思是：此时读取的 `DOM` 状态可以保证和 `componentDidUpdate` 一致
+
+    ```ts
+    class ScrollingList extends React.Component {
+      constructor(props) {
+        super(props);
+        this.listRef = React.createRef();
+      }
+
+      getSnapshotBeforeUpdate(prevProps, prevState) {
+        //我们是否要添加新的 items 到列表?
+        // 捕捉滚动位置，以便我们可以稍后调整滚动.
+        if (prevProps.list.length < this.props.list.length) {
+          const list = this.listRef.current;
+          return list.scrollHeight - list.scrollTop;
+        }
+        return null;
+      }
+
+      componentDidUpdate(prevProps, prevState, snapshot) {
+        //如果我们有snapshot值, 我们已经添加了 新的items.
+        // 调整滚动以至于这些新的items 不会将旧items推出视图。
+        // (这边的snapshot是 getSnapshotBeforeUpdate方法的返回值)
+        if (snapshot !== null) {
+          const list = this.listRef.current;
+          list.scrollTop = list.scrollHeight - snapshot;
+        }
+      }
+
+      render() {
+        return <div ref={this.listRef}>{/* ...contents... */}</div>;
+      }
+    }
+    ```
+
+​

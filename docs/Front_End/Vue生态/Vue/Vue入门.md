@@ -18,6 +18,8 @@ group:
 
 [Vue3-Cookbook](https://v3.cn.vuejs.org/cookbook/)
 
+[Vue3 新版中文文档](https://staging-cn.vuejs.org/guide/introduction.html)
+
 <Font type="miku" fsize="l">因此以下仅为踩坑记录</Font>
 
 ---
