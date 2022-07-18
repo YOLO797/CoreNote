@@ -24,9 +24,9 @@ group:
 
 ---
 
-## 一、基础：
+## 1. 基础部分
 
-### **1. 安装配置：**
+### 1.1 安装
 
 **`Window` 下安装**
 
@@ -83,9 +83,9 @@ sudo make install
 
 **`pycharm`下安装**
 
-    setting-Version Control
-
-</br>
+```bash
+# setting-Version -> Control
+```
 
 如果以上一切正常，打开终端 输入 `git --version ` 应该会显示如下类似的信息
 
@@ -95,7 +95,7 @@ sudo make install
 git version 2.5.0
 ```
 
-### **2. 初次运行 Git 前的配置**
+### **1.2 配置**
 
 在新的系统上，我们一般都需要先配置下自己的 Git 工作环境。配置工作只需一次，以后升级时还会沿用现在的配置。当然，如果需要，你随时可以用相同的命令修改已有的配置。
 
@@ -107,67 +107,70 @@ Git 提供了一个叫做 `git config` 的工具（译注：实际是 git-config
 
 在 Windows 系统上，Git 会找寻用户主目录下的 .gitconfig 文件。主目录即 $HOME 变量指定的目录，一般都是 `C:\Documents and Settings\$USER`。此外，Git 还会尝试找寻 /etc/gitconfig 文件，只不过看当初 Git 装在什么目录，就以此作为根目录来定位。
 
-#### 用户信息配置
+#### **用户信息配置**
 
-第一个要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：
-
-```bash
-$ git config --global user.name "John Doe"
-$ git config --global user.email johndoe@example.com
-```
-
-如果用了 --global 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的仓库都会默认使用这里配置的用户信息。如果要在某个特定的仓库中使用其他名字或者电邮，只要去掉 --global 选项重新配置即可，新的设定保存在当前仓库的 .git/config 文件里。
-
-如果你是使用 `https` 进行仓库的推拉，你可能需要配置客户端记住密码，避免每次都输入密码
+配置你个人的用户名称和电子邮件地址，这两条配置很重要，每次 `Git` 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录，配置命令如下：
 
 ```bash
-$ git config --global credential.helper store
+git config --global user.name  "你的新的username"
+git config --global user.email  "你的新的email"
 ```
 
-#### 文本编辑器配置
+> **注意: ** 如何 避免重复输入 用户名和密码：执行一下上述命令，然后 **再 pull 一次**，输入密码，之后就无需再次输入了
 
-接下来要设置的是默认使用的文本编辑器。Git 需要你输入一些额外消息的时候，会自动调用一个外部文本编辑器给你用。默认会使用操作系统指定的默认编辑器，一般可能会是 Vi 或者 Vim。如果你有其他偏好，比如 Emacs 的话，可以重新设置：
+- `--global`：使用该选项，更改的配置文件就是位于你用户主目录下的那个，以后你所有的仓库都会默认使用其配置的用户信息。若要在某个特定的仓库中使用其他名字或者电邮，只要去掉 `--global` 选项重新配置即可，新的设定保存在当前仓库的 `.git/config` 文件里。
+
+- 如果你是使用 `https` 进行仓库的推拉，你可能需要配置客户端记住密码，避免每次都输入密码
+
+  ```bash
+  git config --global credential.helper store
+  ```
+
+#### **文本编辑器配置**
+
+接下来要设置的是默认使用的文本编辑器。**Git** 需要你输入一些额外消息的时候，会自动调用一个外部文本编辑器给你用。默认会使用操作系统指定的默认编辑器，一般可能会是 **Vi** 或者 **Vim**。如果你有其他偏好，比如 **Emacs** 的话，可以重新设置：
 
 ```bash
 $ git config --global core.editor emacs
 ```
 
-差异分析工具
-还有一个比较常用的是，在解决合并冲突时使用哪种差异分析工具。比如要改用 vimdiff 的话：
+**差异分析工具：**
+还有一个比较常用的是，在解决合并冲突时使用哪种差异分析工具。比如要改用 `vimdiff` 的话：
 
 ```bash
 $ git config --global merge.tool vimdiff
 ```
 
-Git 可以理解 kdiff3，tkdiff，meld，xxdiff，emerge，vimdiff，gvimdiff，ecmerge，和 opendiff 等合并工具的输出信息。当然，你也可以指定使用自己开发的工具。
+**Git** 可以理解 `kdiff3`，`tkdiff`，`meld`，`xxdiff`，`emerge`，`vimdiff`，`gvimdiff`，`ecmerge`，和 `opendiff` 等合并工具的输出信息。当然，你也可以指定使用自己开发的工具
 
-#### 查看配置信息
+#### **查看配置信息**
 
-要检查已有的配置信息，可以使用 git config --list 命令：
+要检查已有的配置信息，可以使用 `git config --list` 命令：
 
 ```bash
 $ git config --list
-user.name=Scott Chacon
-user.email=schacon@gmail.com
-color.status=auto
-color.branch=auto
-color.interactive=auto
-color.diff=auto
-...
+
+# user.name=Scott Chacon
+# user.email=schacon@gmail.com
+# color.status=auto
+# color.branch=auto
+# color.interactive=auto
+# color.diff=auto
+# ...
 ```
 
-有时候会看到重复的变量名，那就说明它们来自不同的配置文件（比如 /etc/gitconfig 和 ~/.gitconfig），不过最终 Git 实际采用的是最后一个。
+有时候会看到重复的变量名，那就说明它们来自不同的配置文件（比如 `/etc/gitconfig` 和 `~/.gitconfig`），不过最终 **Git** 实际采用的是最后一个。
 
-也可以直接查阅某个环境变量的设定，只要把特定的名字跟在后面即可，像这样：
+也可以直接查阅某个环境变量的设定，需把特定的名字跟在后面即可，像这样：
 
 ```bash
 $ git config user.name
-Scott Chacon
+# Scott Chacon
 ```
 
-### **3. 获取 Git 帮助**
+### 1.3. 获取 Git 帮助
 
-想了解 Git 的各式工具该怎么用，可以阅读它们的使用帮助，方法有三：
+想了解 **Git** 的各式工具该怎么用，可以阅读它们的使用帮助，方法有三：
 
 ```bash
 $ git help <verb>
@@ -175,13 +178,13 @@ $ git <verb> --help
 $ man git-<verb>
 ```
 
-比如，要学习 config 命令可以怎么用，运行：
+比如，要学习 `config` 命令可以怎么用，运行：
 
 ```bash
 $ git help config
 ```
 
-### **4. 创建一个版本库 - 步骤:**
+### 1.4 创建一个版本库 - 步骤
 
 1. `git init`
 
@@ -203,7 +206,7 @@ $ git help config
 
 4. `git status`
 
-   > ​ git status 命令可以让我们时刻掌握仓库当前的状态（查看是否提交等等）
+   > git status 命令可以让我们时刻掌握仓库当前的状态（查看是否提交等等）
 
 5. `git diff "file"`
 
@@ -269,165 +272,394 @@ $ git help config
 >
 > 提交后，用 git diff HEAD -- "file"命令可以查看工作区和版本库里面最新版本的区别：
 
-## 二、进阶操作：
+---
 
-### 1. 撤销 - 全步骤
+## 2 进阶部分
 
-- `git checkout -- "file"`
+### 2.1 撤销
+
+- **撤销 改动:** `git checkout -- "file"`
 
   可以丢弃工作区的修改，总之，就是让这个文件回到最近一次 `git commit` 或 `git add `时的状态。
 
-  ```bash
-  git checkout -- <filename>	# 是用版本库里的版本替换工作区的版本
-  ```
+  > **注意：** 执行 `git checkout` 这个操作，文件的改动就没了！在 **不提交**、**没用的**、**准备删掉的代码** 等场景下使用
 
   ```bash
-  git checkout -- *
-  git checkout .	# 可以全删、快速还原之前版本
-
+  git checkout -- <filename>	# 用版本库里的版本替换工作区的版本
+  git checkout -- *	# 可以全删、快速还原之前版本
+  git checkout .	# 同上，全删、快速还原之前版本
   ```
 
-  > **注意:** 执行 `git checkout` 这个操作，文件的改动就没了！！把不提交、没用的、代码删掉才使用
+- **撤销 add：** `git restore --staged <file> | git reset HEAD "file"`
 
-- git restore --staged <file> | git reset HEAD "file"
+  恢复 `add` 操作将其置为未添加状态
 
-  恢复 add 操作将其置为未添加状态
+  - `git reset HEAD file` 则是重置状态为上次 `pull` 下来的状态，是把暂存区的修改撤销掉（_unstage_），重新放回工作区
 
-  git reset HEAD file 则是重置状态为上次 pull 下来的状态，是把暂存区的修改撤销掉（unstage），重新放回工作区
+- **撤销 commit：**`git reset --hard commit id`
 
-[注意]: 这个是撤销add的操作，不是撤销改动的
+  当在错误的分支上提交了一个 `commit`，还没有 `push`，此时想还原
 
-- git reset --hard commit id 撤销 commit
+  1. 先 `git log` 找到这一次的 `commit id` 和上一次的 `id`
+  2. 再 `git reset --hard` 这一次的 `commit id`
+  3. 最后 `git reset` 上一次的 `commit id` 即可撤销 `commit` 并恢复。
 
-      当在错误的分支上提交了一个commit，还没有push，此时想还原
-          1.先 git log 找到这一次的 commit id 和上一次的id
+- **改写 commit 内容：** `git commit --amend`
 
-          2.再 git reset --hard 这一次的commit id
+  针对于 `commit` 内容写错时使用
 
-          3.最后 git reset 上一次的commit id 即可撤销commit 并恢复。
+- **强制提交：** `git push --force`
 
-  [注意]: 这个是撤销commit的操作，
+  > **场景：**
+  >
+  > 1. 若发现 **回退中** 有某些步骤 不能重新推上分支
+  >
+  > 2. 当有 **错误分支被污染** 严重时
+  >
+  >    比如：第一次 `push` 错误，之后没有正确执行 `revert`，导致产生一系列污染提交
 
-- git commit --amend
+  **最终解决办法**：强推
 
-  内容写错了该内容需要运行该命令来修改
+  > **注意 !!** 这种操作**是不安全的**，一定要确保 本地的代码 绝对没有问题，同时不能覆盖他人代码
 
-[注意]: 这个是commit内容写错了才使的
+  ```bash
+  git log # 找到最初想要提交的那一次的 commit id （提交的错误 push）
+  git reset # 如上得到的 commit id，得到最初提交前的错误代码
+  git push --force # 强推
 
-- git push --force
+  # reset之后，修改代码。然后正常 add、commit、push 后，前线上错误提交会被删除和覆盖
+  ```
 
-  场景： 1.若发现回退中有某些步骤不能重新推上分支
+### 2.2 删除
 
-        2.当有错误分支被污染严重时（比如第一次push错误 之后没有正确执行revert 导致产生一系列污染提交时）
+- **删除文件：**`git rm "filename"`
 
-  最终解决办法：强推
+  ```bash
+  # 若需删除线上文件：
+  $ git rm filename
+  $ git commit -m "删除说明："
+  $ git push
 
-  注意:！！！ 这种操作时不安全的 一定要确保本地的代码时绝对没有问题的，同时不能覆盖他人代码
+  $ git rm --cache filename # 只在缓存中删除对应的文件
+  ```
 
-  1.git log 找到最初想要提交的那一次的 commit id （第一次提交的错误 push）
+- **删错 - 还原**
 
-  2.git reset 第 1 步 得到的 commit id 得到最初提交前的错误代码
+  > **注意：** 针对执行了 `git rm` 操作，但未 `git push` 的情况
 
-  3.git push --force 强推
+  ```bash
+  $ git status # 查看: 若出现 deleted: path\xx...\filename 提示，执行
 
-  4.修改 第 2 步 代码之后正常 add、commit、push （之后应该会发现之前线上错误提交被删除和覆盖）
+  $ git reset HEAD # 还原工作区，之后运行
 
-[总结]：
+  $ git checkout "path\xx...\filename" # 把误删的文件还原
+  ```
 
-- 场景 1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令 git checkout -- file。
+- **清空操作：**`git clean -df`
 
-- 场景 2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令 git reset HEAD file，就回到了场景 1
-  第二步按场景 1 操作。
+  > 当出现如：`error: The following untracked working tree files would be overwritten by checkout` 情况时常用
 
-- 场景 3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+  ```bash
+  $ git clean -df  # 把 Untracked files(未跟踪文件) 进行删除
 
-### 二、删除 - 多情况
+  -d: 删除未被添加到git的路径中的文件
+  -f: 强制运行
+  -n: 显示将要删除的文件和目录
+  -x: 删除忽略文件已经对git来说不识别的文件
+  ```
 
-- git rm "file"
+### 2.3 其他内容
 
-  用命令 git rm filename 删掉（filename），并且 git commit -m 之后 push 线上的文件就删除了。安全一些则推荐使用
+- **忽略提交：**`.gitignore`
 
-  git rm --cache filename（只在缓存中删除对应的文件）
+  > **隐藏文件**，用来控制需要 **忽略** 的 `git` 提交
 
-[注意]: 删除线上的文件
+  - 若 `.gitignore` 文件写错，导致错误 `add` 的恢复办法
 
-- 上述还原
+    ```bash
+    git rm r --cache .
+    git add .
+    ```
 
-  git status 查看会发现 出现 deleted: path\xx...\filename 提示。
+  - **git**无法追踪一个**空的文件夹**，当用户需要 **追踪(track)** 一个空的文件夹的时候:
 
-  执行 git reset HEAD 还原工作区， 之后运行
+    1. 在文件夹中添加一个空文件，但无需提交文件时，需创建`.gitkeep` 文件
 
-  git checkout path\xx...\filename 把误删的文件还原
+    2. 将文件夹排除在外，但不包括 **主文件中** 的文件夹，`.gitignore`写入以下：
 
-[注意]: 找回误删文件（可以还原rm，没有push）指用了如上命令删除的文件
+       ```bash
+       folder/*
+       !folder/.gitkeep
+       ```
 
-- git clean -df
+       <Alert type="warning">注意：`windows` 下通过命令行：`type null > .gitkeep`来创建文件夹</Alert>
 
-  error: The following untracked working tree files would be overwritten by checkout 出现此情况：
+- **同步本地的远程分支**
 
-  利用 git clean -df 把 Untracked files（未跟踪文件进行删除）
+  查看本地分支和追踪情况
 
-        -d:删除未被添加到git的路径中的文件
-        -f:强制运行
-        -n:显示将要删除的文件和目录
-        -x:删除忽略文件已经对git来说不识别的文件
+  ```bash
+  $ git remote show origin
+  ```
 
-### 三、其他
+  根据提示 `stale` 执行以下命令来同步删除这些分支
 
-##### .gitignore
+  ```bash
+  $ git remote prune origin
+  ```
 
-该**隐藏文件**用来控制需要**忽略**的 git 提交
+  删除本地多余分支（如：删除 `develop-zz` 分支）
 
-> 若.gitignore 文件写错，导致错误 add 的恢复办法：
->
-> ```bash
-> git rm r --cache .
-> git add .
-> ```
+  ```bash
+  git branch -D develop-zz
+  ```
 
-**git**无法追踪一个**空的文件夹**，当用户需要**追踪(track)**一个空的文件夹的时候：
+---
 
-- 1. 在文件夹中添加一个空文件，但无需提交文件时，需创建`.gitkeep` 文件
+## 3. 分支管理
 
-- 2. 将文件夹排除在外，但不包括主**文件中**的文件夹。`.gitignore`写入以下：
+1. 每次提交，**Git** 都把它们串成一条时间线，这条时间线就是一个分支
 
-```txt
-folder/*
-!folder/.gitkeep
+   - 若截止到目前，只有一条时间线。那么在 **Git**里，这个分支叫主分支，即 `master` 分支
+   - `HEAD` 严格来说，不是指向提交，而是指向 `master`，`master` 才是指向提交的，所以 `HEAD` 指向的就是当前分支
+
+2. 开始时，`master` 分支是一条线，**Git** 用 `master` 指向最新的提交，再用 `HEAD` 指向 `master`，就能确定当前分支，以及当前分支的提交点
+
+3. 每次提交，`master` 分支都会向前移动一步，这样，随着你不断提交，`master` 分支的线也越来越长
+
+4. 当我们创建新的分支，例如 `dev` 时，**Git** 新建了一个指针叫 `dev`，指向 `master` 相同的提交，再把 `HEAD`指向 `dev`，就表示当前分支在 `dev` 上
+
+5. **Git** 创建一个分支很快，因为除了增加一个 `dev` 指针，改改 `HEAD` 的指向，工作区的文件都没有任何变化
+
+   - 不过，从现在开始，对工作区的修改和提交就是针对 `dev` 分支了，比如新提交一次后，`dev` 指针往前移动一步，而 `master` 指针不变
+
+6. 假如我们在 `dev` 上的工作完成了，就可以把 `dev` 合并到 `master` 上
+
+   > **Git** 怎么合并呢？
+   >
+   > ​ 最简单的方法，就是直接把 `master` 指向 `dev` 的当前提交，就完成了合并
+
+7. 所以 **Git** 合并分支也很快，就改改指针，工作区内容也不变
+
+   - 合并完分支后，甚至可以删除 `dev` 分支，删除 `dev` 分支就是把 `dev` 指针给删掉
+   - 删掉后，我们就只剩下一条 `master` 分支
+
+### 3.1 基本操作
+
+- **查看分支：** `git branch`
+
+  ```bash
+  -a: 查看所有分支
+  ```
+
+- **创建分支：**`git branch <name>`
+
+- **切换分支：** `git checkout <name>`
+
+- **创建+切换分支：** `git checkout -b <name>`
+
+- **合并某分支到当前分支：** `git merge <name>`
+
+  - 如：把 `dev` 分支的工作成果合并到 `master` 分支上：
+
+    ```bash
+    git merge origin/dev   # 试验得出：需要写 origin (源), 不然不会真正合并
+    ```
+
+  - `Fast-forward：` **Git**告诉我们，这次合并是 "快进模式"，即直接把 `master` 指向 `dev` 的当前提交，所以合并速度非常快。
+
+- **删除分支：** `git branch -d <name>`
+
+- **多分支转移提交：** `git cherry-pick commit id`
+
+  ```bash
+  git cherry-pick A..B	# 转移从 commit A 到 commit B的提交，但不包含commit A
+
+  git cherry-pick A^..B	# 同上，但包含A
+  ```
+
+  - 若发生代码 **冲突**，`cherry-pick` 会停下来，让用户决定如何继续操作：
+
+    1. 需要用户手动解决冲突
+
+    2. 解决完后需要手动 `git add`
+
+    3. ```bash
+       git cherry-pick --continue # 让其继续执行
+       ```
+
+  ```bash
+  --abort # 发生代码冲突后，放弃合并，回到操作前的样子。
+  --quit	# 发生代码冲突后，退出 Cherry pick，但是不回到操作前的样子。
+  ```
+
+### 3.2 解决冲突
+
+当 **Git** 无法自动合并分支时，就必须首先解决冲突
+
+解决冲突后，再提交，合并完成
+
+> **注：** 建议不要 `commit`，直接 `push` 避免覆盖）
+
+- **查看分支的合并情况：** `git log`
+
+- **查看分支合并图：** `git log --graph`
+
+  ```bash
+  $ git log --graph --pretty=oneline --abbrev-commit
+  ```
+
+- **耐心算法：**`patience`
+
+  > **说明**：常用来 协调一些 **函数** 或者 **标记** 中 没有配对的 **括号**
+
+  ```bash
+  git merge --strategy-option=patience # 合并时可以使用“耐心”算法
+  ```
+
+### 3.3 分支管理策略
+
+```
+    分支管理策略：
+        准备合并dev分支，请注意--no-ff参数，表示禁用Fast forward：
+        $ git merge --no-ff -m "merge with no-ff" dev
+        因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。
+
+        在实际开发中，我们应该按照几个基本原则进行分支管理：
+        首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+        那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master
+        分支发布1.0版本
+        你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
+
+    bug分支：
+        修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
+        当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场。
+
+        注：git stash apply stash@{1} 可以把想要看的工作分支调出来（读数据）。查看用 git stash list。
+            git stash drop stash@{0}  这是删除第一个队列
+            git stash clear  :注意这是清空你所有的内容
+
+    Feature分支：
+        软件开发中，总有无穷无尽的新的功能要不断添加进来。
+        添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完
+        成后，合并，最后，删除该feature分支。
+
+        如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+
+    多人协作:
+        当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。
+        要查看远程库的信息，用git remote
+        或者，用git remote -v显示更详细的信息
+
+        推送分支:
+            推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+            $ git push origin master
+
+            如果要推送其他分支，比如dev，就改成：
+            $ git push origin dev
+
+        但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
+
+            master分支是主分支，因此要时刻与远程同步；
+
+            dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+
+            bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+
+            feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+
+            总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！
+
+        git push策略配置：
+            所有的Git Push的策略:
+                nothing     什么都不干（估计只是测试用的）
+
+                matching    本地所有的分支都Push上去, 只是默认的机制
+
+                upstream/tracking 当本地分支有upstream（也就是有对应的远程分支）时Push到对应的远程分支
+
+                simple      和upstream一样, 但不允许将本地分支提交到远程不一样名字的分支
+
+                current     把当前的分支Push到远程的同名分支
+            Git 1.x的默认策略是matching, 在Git 2.0之后simple会成为新的默认策略。
+
+            - matching不友好之处在于我们的大部分情况都是同步本地的当前分支到远程，你会看到一长串的本地Branch（如果你本地有二三
+            十个的话那就被刷屏了）。如果除了当前分支外的其他分支有新的内容的话，你会看到好多push fail的提示。
+
+            - simple这个选项是非常安全的选项, 至少能阻止新手误操作覆盖远程分支, 所以Git会在2.0时将其作为默认策略。
+
+            大部分情况我们想要做的只是Push当前的分支, 那么最适合的就是upstream。
+            我们可以通过git config去配置采用upstream策略。具体的设置命令如下:
+                git config --global push.default upstream
+抓取分支：
+            多人协作时，大家都会往master和dev分支上推送各自的修改。
+
+                1.首先，可以试图用git push origin branch-name推送自己的修改；
+                2.如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+                3.如果合并有冲突，则解决冲突，并在本地提交；
+                4.没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+
+            如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令
+            git branch --set-upstream branch-name origin/branch-name。   --  废弃
+            此命令改为 git branch --set-upstream-to 若为master分支 直接origin/master即可
+            若其他分支也提示，那就直接切到 其他分支上 如 git checkout dev 然后在
+            git branch --set-upstream-to origin/dev 即可，还有其他分支也同理
+
+这就是多人协作的工作模式，一旦熟悉了，就非常简单。
+
+            从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+            在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+            建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+            从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+        注意：这里的git pull 抓取分支一定是要抓取到可能会有修改的分支，若master有修改则git pull origin master 若正在开发的
+         feature分支上有修改则 git pull feature transform 之后再到本地merge解决冲突。因此要理解 git pull 后面的分支指的是
+         把后面分支的代码给 down下到 自己当前的开发分支！直接git pull下来的是 配置好对应本地的远程分支（若有改动是因为在不同
+         电脑上对同一分支修改产生的改动）   因此 - 以后解决冲突要pull指定别人的那个分支才行
 ```
 
-<Alert type="warning">注意：windows 下通过命令行：`type null > .gitkeep`来创建文件夹</Alert>
+---
 
-##### git config
+## 4. 标签管理
 
-配置提交的用户和邮箱
+```
+标签管理:
+    发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就
+    是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。
+    Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和
+    删除标签都是瞬间完成的。
+    Git有commit，为什么还要引入tag？
+    “请把上周一的那个版本打包发布，commit号是6a5819e...”
+    “一串乱七八糟的数字不好找！”
+    所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
 
-```bash
-git config --global user.name  "你的新的username"
-git config --global user.email  "你的新的email"
+    创建标签：
+        在Git中打标签非常简单，首先，切换到需要打标签的分支上
+        1.命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；git tag v1.0
+        2.git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+        3.git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
+        4.命令git tag可以查看所有标签。
+
+    操作标签：
+        1.命令git push origin <tagname>可以推送一个本地标签；
+        2.命令git push origin --tags可以推送全部未推送过的本地标签；
+        3.命令git tag -d <tagname>可以删除一个本地标签；
+        4.命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
+
+使用GitHub：
+    点“Fork”就在自己的账号下克隆了一个bootstrap仓库，然后，从自己的账号下clone：
+    一定要从自己的账号下clone仓库，这样你才能推送修改。如果从bootstrap的作者的仓库地址git@github.com:twbs/bootstrap.git克隆，因为
+    没有权限，你将不能推送修改。
+    如果你想修复bootstrap的一个bug，或者新增一个功能，立刻就可以开始干活，干完后，往自己的仓库推送。
+    如果你希望bootstrap的官方库能接受你的修改，你就可以在GitHub上发起一个pull request。当然，对方是否接受你的pull request就不一定了。
 ```
 
-> **注意: ** 如何避免重复输入用户名和密码：执行一下命令，然后 **再 pull 一次** 输入密码，之后就无需再次输入了
+---
 
-##### 同步本地的远程分支
-
-查看本地分支和追踪情况
-
-```bash
-git remote show origin
-```
-
-根据提示 `stale` 执行以下命令来同步删除这些分支
-
-```bash
-git remote prune origin
-```
-
-删除本地多余分支（如：删除 `develop-zz` 分支）
-
-```bash
-git branch -D develop-zz
-```
+## 5. 远程仓库
 
     远程仓库:
         （注意，linux下通常不要切换成root用户，直接ubuntu或自己的用户即可）
@@ -475,184 +707,9 @@ git branch -D develop-zz
             使用https除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，但是在某些只开放http端口的公司内部就无法使用ssh协议而只能用https。
             Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快。
 
-    分支管理:
-        1.每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即master分支。HEAD
-        严格来说不是指向提交，而是指向master，master才是指向提交的，所以，HEAD指向的就是当前分支。
-
-        2.一开始的时候，master分支是一条线，Git用master指向最新的提交，再用HEAD指向master，就能确定当前分支，以及当前分支的提交点:
-
-        3.每次提交，master分支都会向前移动一步，这样，随着你不断提交，master分支的线也越来越长:
-
-        4.当我们创建新的分支，例如dev时，Git新建了一个指针叫dev，指向master相同的提交，再把HEAD指向dev，就表示当前分支在dev上：
-
-        5.Git创建一个分支很快，因为除了增加一个dev指针，改改HEAD的指向，工作区的文件都没有任何变化！
-        不过，从现在开始，对工作区的修改和提交就是针对dev分支了，比如新提交一次后，dev指针往前移动一步，而master指针不变：
-
-        6.假如我们在dev上的工作完成了，就可以把dev合并到master上。Git怎么合并呢？最简单的方法，就是直接把master指向dev的当前提交，就完成了合并
-
-        7.所以Git合并分支也很快！就改改指针，工作区内容也不变！
-        合并完分支后，甚至可以删除dev分支。删除dev分支就是把dev指针给删掉，删掉后，我们就剩下了一条master分支：
-
-        基本操作：
-            查看分支：git branch
-
-            创建分支：git branch <name>
-
-            切换分支：git checkout <name>
-
-            创建+切换分支：git checkout -b <name>
-
-            合并某分支到当前分支：git merge <name>：
-                把dev分支的工作成果合并到master分支上  git merge origin/dev   （经试验要写源，不然不会真正合并）
-                Fast-forward信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快。
-
-            删除分支：git branch -d <name>
-
-        解决冲突：
-            用带参数的git log也可以看到分支的合并情况：
-            $ git log --graph --pretty=oneline --abbrev-commit
-
-            当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。（注：建议不要commit，直接push避免覆盖）
-            用git log --graph命令可以看到分支合并图。
-
-            合并时可以使用“耐心”算法：（协调一些函数中或者标记中没有配对的括号）
-            git merge --strategy-option=patience
-
-        分支管理策略：
-            准备合并dev分支，请注意--no-ff参数，表示禁用Fast forward：
-            $ git merge --no-ff -m "merge with no-ff" dev
-            因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。
-
-            在实际开发中，我们应该按照几个基本原则进行分支管理：
-            首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
-            那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master
-            分支发布1.0版本
-            你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
-
-        bug分支：
-            修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
-            当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场。
-
-            注：git stash apply stash@{1} 可以把想要看的工作分支调出来（读数据）。查看用 git stash list。
-                git stash drop stash@{0}  这是删除第一个队列
-                git stash clear  :注意这是清空你所有的内容
-
-        Feature分支：
-            软件开发中，总有无穷无尽的新的功能要不断添加进来。
-            添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完
-            成后，合并，最后，删除该feature分支。
-
-            如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
-
-        多人协作:
-            当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。
-            要查看远程库的信息，用git remote
-            或者，用git remote -v显示更详细的信息
-
-            推送分支:
-                推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
-                $ git push origin master
-
-                如果要推送其他分支，比如dev，就改成：
-                $ git push origin dev
-
-            但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
-
-                master分支是主分支，因此要时刻与远程同步；
-
-                dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
-
-                bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
-
-                feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
-
-                总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！
-
-            git push策略配置：
-                所有的Git Push的策略:
-                    nothing     什么都不干（估计只是测试用的）
-
-                    matching    本地所有的分支都Push上去, 只是默认的机制
-
-                    upstream/tracking 当本地分支有upstream（也就是有对应的远程分支）时Push到对应的远程分支
-
-                    simple      和upstream一样, 但不允许将本地分支提交到远程不一样名字的分支
-
-                    current     把当前的分支Push到远程的同名分支
-                Git 1.x的默认策略是matching, 在Git 2.0之后simple会成为新的默认策略。
-
-                - matching不友好之处在于我们的大部分情况都是同步本地的当前分支到远程，你会看到一长串的本地Branch（如果你本地有二三
-                十个的话那就被刷屏了）。如果除了当前分支外的其他分支有新的内容的话，你会看到好多push fail的提示。
-
-                - simple这个选项是非常安全的选项, 至少能阻止新手误操作覆盖远程分支, 所以Git会在2.0时将其作为默认策略。
-
-                大部分情况我们想要做的只是Push当前的分支, 那么最适合的就是upstream。
-                我们可以通过git config去配置采用upstream策略。具体的设置命令如下:
-                    git config --global push.default upstream
 
 
-            抓取分支：
-                多人协作时，大家都会往master和dev分支上推送各自的修改。
-
-                    1.首先，可以试图用git push origin branch-name推送自己的修改；
-                    2.如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
-                    3.如果合并有冲突，则解决冲突，并在本地提交；
-                    4.没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
-
-                如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令
-                git branch --set-upstream branch-name origin/branch-name。   --  废弃
-                此命令改为 git branch --set-upstream-to 若为master分支 直接origin/master即可
-                若其他分支也提示，那就直接切到 其他分支上 如 git checkout dev 然后在
-                git branch --set-upstream-to origin/dev 即可，还有其他分支也同理
-
-
-                这就是多人协作的工作模式，一旦熟悉了，就非常简单。
-
-                从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
-
-                在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
-
-                建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
-
-                从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
-
-            注意：这里的git pull 抓取分支一定是要抓取到可能会有修改的分支，若master有修改则git pull origin master 若正在开发的
-             feature分支上有修改则 git pull feature transform 之后再到本地merge解决冲突。因此要理解 git pull 后面的分支指的是
-             把后面分支的代码给 down下到 自己当前的开发分支！直接git pull下来的是 配置好对应本地的远程分支（若有改动是因为在不同
-             电脑上对同一分支修改产生的改动）   因此 - 以后解决冲突要pull指定别人的那个分支才行
-
-
-
-    标签管理:
-        发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就
-        是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。
-        Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和
-        删除标签都是瞬间完成的。
-        Git有commit，为什么还要引入tag？
-        “请把上周一的那个版本打包发布，commit号是6a5819e...”
-        “一串乱七八糟的数字不好找！”
-        所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
-
-        创建标签：
-            在Git中打标签非常简单，首先，切换到需要打标签的分支上
-            1.命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；git tag v1.0
-            2.git tag -a <tagname> -m "blablabla..."可以指定标签信息；
-            3.git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
-            4.命令git tag可以查看所有标签。
-
-        操作标签：
-            1.命令git push origin <tagname>可以推送一个本地标签；
-            2.命令git push origin --tags可以推送全部未推送过的本地标签；
-            3.命令git tag -d <tagname>可以删除一个本地标签；
-            4.命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
-
-    使用GitHub：
-        点“Fork”就在自己的账号下克隆了一个bootstrap仓库，然后，从自己的账号下clone：
-        一定要从自己的账号下clone仓库，这样你才能推送修改。如果从bootstrap的作者的仓库地址git@github.com:twbs/bootstrap.git克隆，因为
-        没有权限，你将不能推送修改。
-        如果你想修复bootstrap的一个bug，或者新增一个功能，立刻就可以开始干活，干完后，往自己的仓库推送。
-        如果你希望bootstrap的官方库能接受你的修改，你就可以在GitHub上发起一个pull request。当然，对方是否接受你的pull request就不一定了。
-
+​
 
     gitlab多用户配置：
         1.首先需要  ssh-keygen -t rsa -C "zhengze@uit.com.cn"  生成不一样的另一个key 并修改命名为 id_rsa_gitlab
