@@ -209,12 +209,17 @@ useEffect(func, [deps])
 
 ```ts
 const [state, dispatch] = useReducer(reducer, initialArg, init);
+reducer = (state, action) => {};
 ```
 
-- `reducer：` 需要执行的函数
+- `reducer：` 接收旧的 `state`，执行一段过程，来返回新的 `state`
+
+  - `state：` 传递进来的，旧的状态
+  - `action：` `dispatch` 时传过来的参数
+
 - `initialArg：` `state` 的初始值
 - `init：` 第一次执行时，对初始值的更新
-- `dispatch：` 用于执行 `reducer` 中的回调函数
+- `dispatch：` 分配任务，用于执行 `reducer` 中的回调函数
 
 示例如下：
 
@@ -274,15 +279,15 @@ const memoizedCallback = useCallback(() => {
 ```
 
 - `func：` 创建的函数，即闭包 `memoized`
-
   - `memo：` 函数组件中创建的内部函数，避免非依赖项的修改，而引发函数执行
   - `callback：` 通过父组件传递过来的回调，避免非依赖项的修改，而引发回调执行
-
-- `deps：` 同上 `Effect`，需要减少计算的目标依赖项
+- `deps：` 同上 `Effect`，需要减少计算的目标依赖项，**当为空时，永远返回引用，避免重新实例化占内存**
 
 示例如下：
 
 - ##### **useMemo**
+
+  保存了渲染的 **结果**
 
   ```ts
   const UseMemoPage = (props) => {
@@ -319,41 +324,49 @@ const memoizedCallback = useCallback(() => {
 
 - ##### **useCallback**
 
+  在函数组件里，避免了回调函数的 **重新生成** （_减少内存占用_）
+
   ```ts
+  let fn = null;
+
   const UseCallbackPage = (props) => {
     const [count, setCount] = useState(0);
+    const [countb, setCountb] = useState(0);
 
     const addClick = useCallback(() => {
       let sum = 0;
       for (let i = 1; i < count; i++) {
-        console.log('i', i);
+        console.log('回调执行打印', i);
         sum += i;
       }
       return sum;
     }, [count]);
 
+    console.log('回调函数是否重新实例化：', !Object.is(fn, addClick));
+    fn = addClick;
     const [value, setValue] = useState('');
     return (
       <div>
         <h3>UseCallbackPage</h3>
-        <p>count: {count}</p>
-        <button onClick={() => setCount(count + 1)}>add</button>
+        <p>父组件 count: {count}</p>
+        <p>父组件 countb: {countb}</p>
+        <button onClick={() => setCount(count + 1)}>addCount</button>
+        <button onClick={() => setCountb(countb + 1)}>addCount2</button>
+        <Child count={count} addClick={addClick} />
         <input
           value={value}
           onChange={(event) => setValue(event.target.value)}
         />
-        <Child addClick={addClick} />
       </div>
     );
   };
 
-  const Child = React.memo((props) => {
-    const addClick = props.addClick;
-
-    console.log('Child render');
+  const Child = React.memo(({ count, addClick }) => {
+    console.log('子组件渲染');
     return (
       <div>
-        <button onClick={() => console.log(addClick())}>add</button>
+        <p>子组件count: {count}</p>
+        <button onClick={() => console.log(addClick())}>addClick</button>
       </div>
     );
   });
