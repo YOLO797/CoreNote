@@ -201,7 +201,7 @@ group:
 
 - 基本挂载
 
-  ```sh
+  ```shell
   # 通过IP挂载
   $ mount -t cifs //172.16.120./test /mnt/uit-share02/
   $ Password for root@//10.10.10.223/test
@@ -210,7 +210,7 @@ group:
 
 - 强制卸载
 
-  ```sh
+  ```shell
   $ umount -f -a -t cifs -l /挂载点
   ```
 
@@ -234,7 +234,7 @@ group:
 
 - 列出当前用户：
 
-  ```sh
+  ```shell
   # 全部用户
   $ pdbedit -L
 
@@ -244,20 +244,20 @@ group:
 
 - 添加用户：
 
-  ```sh
+  ```shell
   # 无需回车确认输入
   $ echo -e "12345\n12345\n" | pdbedit -t -a zz
   ```
 
 - 更新用户：
 
-  ```sh
+  ```shell
   # 也许这只是针对于修改密码
   $ echo -e "233333\n233333\n" | pdbedit -t -r -u zz
   ```
 
 - 删除用户：
 
-  ```sh
+  ```shell
   $ pdbedit -x zz
   ```

@@ -20,7 +20,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - 创建单个 uraid 的例子: '
 
-  ```sh
+  ```shell
   $ ucli uraid create test-pool test_uraid_1 4000G 256 8 2 2
   ```
 
@@ -48,7 +48,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - **卸载命令**：
 
-  ```sh
+  ```shell
   # 干掉服务
   for i in `ls /usr/lib/uraid/scripts/init/`;do systemctl disable --now $i;done
 
@@ -66,7 +66,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
   - 重新生成 uuid (虚拟机克隆模式)
 
-    ```sh
+    ```shell
     uuidgen > /etc/machine-id
     ```
 
@@ -74,7 +74,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - 降低 uus 资源占用(虚拟机)
 
-  ```sh
+  ```shell
   vim /usr/lib/systemd/system/unfs-server.service  +32
   ExecStart=/usr/bin/nfsd -V 3 -p 3000 3500 把3500改小点 （3000，3500）都改10
 
@@ -85,7 +85,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - 关闭磁盘检测（虚拟机）
 
-  ```sh
+  ```shell
   touch /etc/sysconfig/uraid/disable-exp-chk-baddisk
   rm -f /etc/sysconfig/uraid/enable-disk-check
   touch /etc/sysconfig/uraid/enable-uvol-vm
@@ -93,7 +93,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - 停掉所有 uus 服务
 
-  ```sh
+  ```shell
   $ ucli svc stop all
   ```
 
@@ -101,7 +101,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - 删除 sn，重新生成新的 sn(虚拟机)
 
-  ```sh
+  ```shell
   rm -f /etc/sysconfig/uraid/sn
   rm -f /etc/sysconfig/uraid/key
   systemctl restart v-meta
@@ -109,7 +109,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - 获取 key
 
-  ```sh
+  ```shell
   # 1.smb共享 \\172.18.50.50\lic 目录下
   username: sn password: sn
 
@@ -132,7 +132,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 
 - 更新 `uraid` 的 `udev` 文件（1202 版本已更新）
 
-  ```sh
+  ```shell
   cat <<EOF > /etc/udev/rules.d/90-umd.rules
 
   SUBSYSTEM!="block", GOTO="umd_end"
@@ -157,7 +157,7 @@ K 的选择还受到集群内节点数量的限制，如果节点数量小于（
 - 当系统盘为 xfs 文件系统时，添加指定行 `return 0`
 
   ```shell
-  vim  /usr/lib/uraid/scripts/drivers.sh +174
+  vim  /usr/lib/uraid/scripts/drivers.shell +174
 
 
   171         #insmod openfile-by-ino drivers

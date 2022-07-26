@@ -9,7 +9,7 @@ order: 3
 
 - 新建 `/etc/yum.repos.d/gitlab-ce.repo` 内容如下：
 
-  ```sh
+  ```shell
   [gitlab-ce]
   name=Gitlab CE Repository
   baseurl=https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el$releasever/
@@ -19,14 +19,14 @@ order: 3
 
 - 再执行：
 
-  ```sh
+  ```shell
   sudo yum makecache
   sudo yum install gitlab-ce
   ```
 
 ### 2. 安装依赖包
 
-```sh
+```shell
 sudo yum install -y curl policycoreutils-python openssh-server perl
 
 # Enable OpenSSH server daemon if not enabled: sudo systemctl status sshd
@@ -47,7 +47,7 @@ sudo systemctl start postfix
 
 ### 3. 安装 GitLab
 
-```sh
+```shell
 sudo yum install -y gitlab-ce
 ```
 

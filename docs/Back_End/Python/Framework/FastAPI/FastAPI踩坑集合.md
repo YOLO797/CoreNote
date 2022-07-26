@@ -39,7 +39,7 @@ order: 4
 **解决方式：**
 安装带有 `websockets` 功能的 `uvicorn`
 
-```sh
+```shell
 $ pip3 uninstall uvicorn  # 先把之前安装的不支持websocket的版本给卸载掉
 
 $ pip3 install uvicorn[standard]  # 安装[standard]版本的包

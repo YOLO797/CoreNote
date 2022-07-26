@@ -96,7 +96,7 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 
 - 执行如下命令，卸载软件包
 
-  ```sh
+  ```shell
   yum remove docker \
       docker-client \
       docker-client-latest \
@@ -109,7 +109,7 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 
 - 删除 `docker` 目录
 
-  ```sh
+  ```shell
   rm -rf /var/lib/docker/
   ```
 
@@ -117,7 +117,7 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 
 ###### 配置宿主机网卡转发
 
-```sh
+```shell
 ## 改系统配置，需要root执行，写如下系统配置到 `docker.conf` 中
 cat <<EOF > /etc/sysctl.d/docker.conf
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -135,13 +135,13 @@ sysctl -p /etc/sysctl.d/docker.conf
 
 - 安装 `yum-utils` 包（提供 `yum-config-manager` 实用程序）
 
-  ```sh
+  ```shell
   yum install -y yum-utils
   ```
 
 - 设置稳定的存储库（下载阿里源 repo 文件）
 
-  ```sh
+  ```shell
   ## 下载阿里源repo文件
   curl -o /etc/yum.repos.d/Centos-7.repo http://mirrors.aliyun.com/repo/Centos-7.repo
   curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -153,7 +153,7 @@ sysctl -p /etc/sysctl.d/docker.conf
 
 - 查看源中可用的版本
 
-  ```sh
+  ```shell
   yum list docker-ce --showduplicates | sort -r
   ```
 
@@ -168,13 +168,13 @@ sysctl -p /etc/sysctl.d/docker.conf
 
 - 查看安装的 `docker` 软件
 
-  ```sh
+  ```shell
   yum list installed |grep docker
   ```
 
 - 配置镜像源加速（可注册阿里云账号 - 容器获取）
 
-  ```sh
+  ```shell
   ## https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
   mkdir -p /etc/docker
 
@@ -188,7 +188,7 @@ sysctl -p /etc/sysctl.d/docker.conf
 
 - 后续一系列配置
 
-  ```sh
+  ```shell
   ## reload & 开机自启
   systemctl daemon-reload
   systemctl enable docker

@@ -6,107 +6,130 @@ group:
   order: 41
 ---
 
-# 前端安装问题汇总：
+# 前端部署说明
 
-## 一、Node
+### 1. CentOS 下安装
 
-### 1.CentOS 安装 node + npm
-
-#### 安装 node
+#### 1.1 安装 node
 
 推荐源码安装：
 
-- 1.从官网下下载最新的 nodejs，https://nodejs.org/en/download/
+1. 从官网下下载最新的 [nodejs](https://nodejs.org/en/download/)
 
-  ```sh
-  注意：下载的是Linux Binaries (x64) 二进制
-  ```
+   - **注意**：下载的是 `Linux Binaries (x64)` 二进制
 
-- 2.通过 ftp 工具上传到 linux 服务，解压安装包
+2. 通过 **ftp** 工具上传到 `linux` 服务，解压安装包
 
-      ```sh
+   ```shell
+   tar -xvf node-v10.16.0-linux-x64.tar.xz
+   ```
 
-  tar -xvf node-v10.16.0-linux-x64.tar.xz
+3. 移动并改名文件夹（_不改名也行_）
 
-  ````
+   ```shell
+   mv node-vxxx-linux-64/ /usr/local/nodejs
+   ```
 
-  3、移动并改名文件夹（不改名也行）
+4. 让 `npm` 和 `node` 命令全局生效
 
-  ```sh
-  mv node-vxxx-linux-64/ /usr/local/nodejs
-  ````
+   ```shell
+   ln -s /usr/local/nodejs/bin/npm /usr/local/bin/
+   ln -s /usr/local/nodejs/bin/node /usr/local/bin/
+   ```
 
-  4、让 npm 和 node 命令全局生效
+> **注意：** 后续安装 `yarn` 等其他的配置环境变量，都可以软连接到 `/usr/loca/bin` 下
 
-  ```sh
-  ln -s /usr/local/nodejs/bin/npm /usr/local/bin/
-  ln -s /usr/local/nodejs/bin/node /usr/local/bin/
-  ```
+#### 1.2 安装 yarn
 
-[注]: 后续安装yarn等其他的配置环境变量，都可以软连接到/usr/loca/bin下
+`node` 安装后默认自带随版本的 `npm` 包管理器，使用 `npm` 安装 `yarn`
 
-#### 安装 yarn
-
-node 安装后默认自带随版本的 npm 包管理器，使用 npm 安装 yarn
-
-```sh
+```shell
 npm install -g yarn
 
-查看输出命令行显示的yarn安装位置，通常显示为：
+# 查看输出命令行显示的yarn安装位置，通常显示为：
 /usr/local/nodejs/bin/yarn -> /usr/local/nodejs/lib/node_modules/yarn/bin/yarn.js
 
 ln -s /usr/local/nodejs/bin/yarn /usr/local/bin/
 ```
 
-## 二、npm
+### 2. npm
 
-NodeJs 的默认包管理器，用于安装和发布软件
+**npm** 是 `nodejs` 的默认包管理器，用于安装和发布软件
 
-### 1、npm 使用:
+#### 2.1 npm 换源:
 
-- 镜像源
-  搭建环境设置淘宝镜像
-  npm config set registry https://registry.npm.taobao.org --global // 设置当前地址（默认地址）
+- 设置全局淘宝镜像地址
+
+  ```shell
+  npm config set registry https://registry.npm.taobao.org --global
   npm config set disturl https://registry.npm.taobao.org --global
-  查看镜像的配置结果
+  ```
+
+- 查看镜像的配置结果
+
+  ```shell
   npm config get registry
   npm config get disturl
-  使用 nrm 工具切换/切换回淘宝源
-  npx nrm use taobao/npm
-  使用淘宝定制的 cnmp 命令行工具代替默认的 npm
+  ```
+
+- 使用 `nrm` 工具切换/切换回淘宝源
+
+  ```shell
+  $ npx nrm use taobao源 / npm源
+  ```
+
+- 使用淘宝 `cnmp` 替代 `npm`
+
+  ```shell
   npm install -g cnpm --registry=https://registry.npm.taobao.org
-- 基本使用：
-  npm -v 查看版本
-  npm install xxx 安装
-  -g 全局安装
-  -save 在 package.json 文件的 dependencise 字典中写入依赖项
-  -save-dev 在 package.json 文件的 devDependencise 字典中写入依赖项
-  npm -g install npm@5.9.1 (@后跟版本号) 可以安装、更新指定版本
-  npm list -g 查看全局安装包列表
-  npm list vue 查看某个模块版本号
-  npm update -g packageName 更新全局包
-  npm uninstall --save packageName 卸载包并再 package.json 中删除
-  [注]:
-  - dependencise 运行时依赖，发布后，即生产环境下需要用的模块
-  - devDependencise 开发时依赖，开发时用到的模块，发布不用，比如项目中的 gulp、压缩 css、js 的模块，项目发布部署时不用
+  ```
 
-### 2、注意事项
+#### 2.2 基本使用
 
-- 1.当 npm install 卡住:（如安装 core-js）
+- 查看版本
 
-  若提示权限不够，operation not permitted 请尝试此命令删除缓存
+  ```shell
+  npm -v
+  ```
 
-  > npm cache verify
+- 安装依赖包
 
-### 3、包的导入:
+  ```shell
+  npm install packageName
 
-以导入 jq 为例:
+  # -g 全局安装
+  # -save 在 package.json 文件的 dependencise 字典中写入依赖项
+  # -save-dev 在 package.json 文件的 devDependencise 字典中写入依赖项
 
-- 1.以前原始的导入方式是原生导入
-  <script src="./node_modules/jquery/dist/jquery.min.js"/>
-- 2.使用 npm 则可以
-  const $ = require("jquery") // npm 安装 可直接从 node_modules 中自动找到 jquery
+  npm -g install npm@5.9.1 # (@后跟版本号) 可以安装、更新指定版本
+  ```
 
-        const foo = rquire("./func.js") // 导入js文件下的函数 后缀可不写
+- 查看依赖包
 
-        const foo = rquire("./func")
+  ```shell
+  npm list -g
+
+  npm list vue	# 查看某个模块版本号
+  ```
+
+- 更新依赖包
+
+  ```shell
+  $ npm update -g packageName # 全局更新依赖包
+  ```
+
+- 卸载依赖包
+
+  ```shell
+  $ npm uninstall --save packageName # 卸载依赖包，并在 package.json 中删除
+  ```
+
+**注意:**
+
+- 当 `npm install` 卡住:（如安装 `core-js`）
+
+  若提示权限不够 `operation not permitted` 请尝试 如下命令删除缓存：
+
+  ```shell
+  $ npm cache verify
+  ```

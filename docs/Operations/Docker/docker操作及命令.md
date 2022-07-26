@@ -37,13 +37,13 @@ order: 2
 
 1. 查看镜像列表：
 
-   ```sh
+   ```shell
    docker images || docker image ls
    ```
 
 2. 远程仓库获取镜像：
 
-   ```sh
+   ```shell
    # 从远程仓库拉取 镜像名称：tag标签
    docker pull nginx:alpine
 
@@ -55,15 +55,15 @@ order: 2
 
 3. 通过镜像来启动容器：
 
-   ```sh
+   ```shell
    docker run --name z-nginx-alpine -d nginx:alpine
    ```
 
 4. 进入容器并查看进程：
 
-   ```sh
+   ```shell
    # 进入容器内部，分配一个tty终端
-   docker exec -ti z-nginx-alpine /bin/sh	# or sh or bash
+   docker exec -ti z-nginx-alpine /bin/shell	# or shell or bash
    ps aux
 
    # 退出
@@ -76,7 +76,7 @@ order: 2
 
      `centos-nfs：`
 
-     ```sh
+     ```shell
      # 定义docker使用那个基础系统镜像作为模板，后续命令都已这个基础镜像为准,等同于 pull 操作
      FROM centos:7.6.1810
 
@@ -89,7 +89,7 @@ order: 2
 
      `ubuntu-nginx：`
 
-     ```sh
+     ```shell
      FROM ubuntu
 
      RUN apt-get update && apt i -y nginx
@@ -99,19 +99,19 @@ order: 2
 
    - 构建本地镜像:
 
-     ```sh
+     ```shell
      docker build . -t z-nginx:ubuntu -f DockerFile
      ```
 
    - 使用新镜像启动
 
-     ```sh
+     ```shell
      docker run --name z-nginx-ubuntu -d z-nginx:ubuntu
      ```
 
    - 容器端口转发
 
-     ```sh
+     ```shell
      # 查看 nginx 页面
      docker exec -ti z-nginx-alpine bash
      curl localhost
@@ -126,7 +126,7 @@ order: 2
 
 6. 删除容器服务
 
-   ```sh
+   ```shell
    docker rm -f z-nginx-ubuntu
    ```
 
@@ -138,13 +138,13 @@ order: 2
 
 1. 导入镜像到文件中
 
-   ```sh
+   ```shell
    docker save -o zz-nginx-alpine.tar nginx:alpine
    ```
 
 2. 从文件中加载镜像
 
-   ```sh
+   ```shell
    docker load -i zz-nginx-alpine.tar
    ```
 
@@ -152,7 +152,7 @@ order: 2
 
    https://docs.docker.com/registry/
 
-   ```sh
+   ```shell
    # 使用docker镜像启动仓库服务
    docker run -d -p 5000:5000 registry registry:2
    ```
@@ -171,7 +171,7 @@ order: 2
 
 ::: details 示例
 
-```sh
+```shell
 Client: Docker Engine - Community
  Cloud integration: 1.0.7
  Version:           20.10.2
@@ -211,7 +211,7 @@ Server: Docker Engine - Community
 
 ::: details 示例
 
-```sh
+```shell
 Client:
  Context:    default
  Debug Mode: false
@@ -281,7 +281,7 @@ WARNING: No blkio throttle.write_iops_device support
 
 ::: details 示例
 
-```sh
+```shell
 docker --help
 ```
 

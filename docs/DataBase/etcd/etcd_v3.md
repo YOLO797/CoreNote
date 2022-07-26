@@ -55,7 +55,7 @@ etcd3 没有 ls 使用 get 替代
 
 #### 环境变量：
 
-```sh
+```shell
 # etcd v3 环境变量
 export ETCDCTL_WRITE_OUT="table"
 export ETCDCTL_API=3

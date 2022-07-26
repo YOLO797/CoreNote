@@ -22,7 +22,7 @@ order: 6
 
    > 临时换源只需要在 `pip` 安装包时，加上一个 `-i` 参数后接源的 `url` 即可：
 
-   ```sh
+   ```shell
    # 下载python中的Django包，这里使用的是豆瓣源
    $ pip install django -i http://pypi.douban.com/simple
    ```
@@ -58,7 +58,7 @@ order: 6
 
    **命令**：
 
-   ```sh
+   ```shell
    # 清华源
    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
@@ -89,7 +89,7 @@ order: 6
 
 - 线上 download
 
-  ```sh
+  ```shell
   # 如： 手动输入如下网址：
   # https://pypi.tuna.tsinghua.edu.cn/simple/grpcio/
   # https://pypi.tuna.tsinghua.edu.cn/simple/grpcio-tools/

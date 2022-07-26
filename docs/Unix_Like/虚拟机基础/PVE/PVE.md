@@ -31,7 +31,7 @@ group:
 
 - 先搜索显卡型号
 
-  ```sh
+  ```shell
   $ lspci | grep VGA
   ```
 
@@ -41,13 +41,13 @@ group:
 
 - 若有图形化界面，比如 `X server` 执行如下命令查看
 
-  ```sh
+  ```shell
   $ ps aux | grep X	# 若有服务则 kill 掉
   ```
 
 - 切换回多用户命令行登录：
 
-  ```sh
+  ```shell
   $ init 3
 
   # 若显示 Q_Q_Q@_ 之类的乱码，或光标无响应，需要更改如下
@@ -78,7 +78,7 @@ group:
 
 - 添加如下**黑名单**，禁用核显
 
-  ```sh
+  ```shell
   $ vim /etc/modprobe.d/blacklist.conf
 
   # copy如下内容
@@ -91,7 +91,7 @@ group:
 
 - 修改 `pve` 的黑名单
 
-  ```sh
+  ```shell
   $ vim /etc/modprobe.d/pve-blacklist.conf
 
   # copy如下内容
@@ -100,13 +100,13 @@ group:
 
 - 执行命令更改
 
-  ```sh
+  ```shell
   $ update-initramfs -u
   ```
 
 - 验证是否已禁用
 
-  ```sh
+  ```shell
   $ lspci|grep nouveau
 
   # 或是如下, 无返回信息就是禁用了
@@ -116,7 +116,7 @@ group:
 
 - 卸载核显或旧驱动
 
-  ```sh
+  ```shell
   $ apt-get remove nvidia* && sudo apt autoremove
   ```
 
@@ -124,14 +124,14 @@ group:
 
 - 先替换 `Debian` 通用源，见 `linux` 系统换源部分
 
-  ```sh
+  ```shell
   # Debian 的软件源配置文件是
   $ vim /etc/apt/sources.list
   ```
 
 - 替换 `pve` 源，不确定版本尽量用官方源
 
-  ```sh
+  ```shell
   # pve 镜像默认的 pve 软件源配置文件如下：
   $ vim /etc/apt/sources.list.d/pve-enterprise.list
 
@@ -145,7 +145,7 @@ group:
 
 - 下载一系列依赖
 
-  ```sh
+  ```shell
   $ apt-get install dkms build-essential pve-headers pve-headers-x.x.x-x-pve
   ```
 
@@ -153,7 +153,7 @@ group:
 
   - 从网站上下**deb**包，即 [pve-header](http://download.proxmox.com/debian/pve/dists/bullseye/pve-no-subscription/binary-amd64/) 中寻找对应版本号
 
-    ```sh
+    ```shell
     # 查看header版本
     $ pveversion -v
 
@@ -167,7 +167,7 @@ group:
 
   - 或直接更新为官方源，先默认下载，然后再指定版本号
 
-    ```sh
+    ```shell
     $ apt-get install pve-headers-5.13.19-1-pve
     ```
 
@@ -175,20 +175,20 @@ group:
 
 - 修改可执行权限
 
-  ```sh
+  ```shell
   chmod 777 NVIDIA-Linux-x86_64-390.147.run
   chown root.root NVIDIA-Linux-x86_64-390.147.run
   ```
 
 - 运行 `.run` 程序
 
-  ```sh
+  ```shell
   /NVIDIA-Linux-x86_64-390.147.run
   ```
 
 - check
 
-  ```sh
+  ```shell
   # nvidia YES!
   modprobe nvidia
 
@@ -198,7 +198,7 @@ group:
 
 - 收尾
 
-  ```sh
+  ```shell
   # 开启图形化界面，参考 步骤1 逆着来
 
   # 恢复默认启动的图形化

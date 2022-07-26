@@ -1,9 +1,6 @@
 ---
-title: vim使用指北
-order: 1
-group:
-  title: Shell脚本
-  order: 8
+title: vim 快捷键
+order: 2
 ---
 
 ## vim 的使用方法&快捷键：

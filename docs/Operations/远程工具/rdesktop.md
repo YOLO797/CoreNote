@@ -17,13 +17,13 @@ group:
 
 #### 安装
 
-```sh
+```shell
 apt-get install rdesktop
 ```
 
 ### 2. 使用命令
 
-```sh
+```shell
 -d: 域
 -s: shell命令 (登录运行命令之后就退出)
 -c: 工作目录（应该是-s的子命令），-s shell命令的一个参数
@@ -57,7 +57,7 @@ apt-get install rdesktop
 
 - 示例：
 
-  ```sh
+  ```shell
   # 尽可能快速输出的将剪贴板和声音映射过去
   rdesktop -P -r clipboard:PROMARYCLIPBOARD -r sound:local 192.168.3.75
   ```
@@ -66,7 +66,7 @@ apt-get install rdesktop
 
 - 解决声音失效的办法
 
-  ```sh
+  ```shell
   # 要找出哪些进程正在访问声音设备
   lsof /dev/snd/*
 

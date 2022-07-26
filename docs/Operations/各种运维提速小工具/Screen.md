@@ -70,13 +70,13 @@ group:
 
   - 进入后中断：
 
-    ```sh
+    ```shell
     screen -r 30339		# 进入要中断的screen
     exit # 或contorl + c 退出 screen
     ```
 
   - 直接中断：
 
-    ```sh
+    ```shell
     screen -S screenID -X quit
     ```

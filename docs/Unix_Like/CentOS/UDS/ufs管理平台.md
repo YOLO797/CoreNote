@@ -14,7 +14,7 @@ group:
 
 - 免密认证
 
-  ```sh
+  ```shell
   $ ssh-keygen
   $ ssh-copy-id -i ~/.ssh/id_rsa.pub -p 22 root@172.16.120.142
   ```
@@ -27,13 +27,13 @@ group:
 
 - 远程执行命令
 
-  ```sh
+  ```shell
   $ ssh 172.16.120.142 "systemctl restart uxs-agent"
   ```
 
 - 重启服务
 
-  ```sh
+  ```shell
   systemctl restart uxs-dashboard
   systemctl restart uxs-agent
   systemctl restart uxs-monitor
@@ -44,7 +44,7 @@ group:
 
 - 手动启动服务
 
-  ```sh
+  ```shell
   $ python3 /opt/uxs/dashboard/uxsdashboard.py
 
   $ python3 /opt/uxs/agent/uxsagent.py
@@ -54,7 +54,7 @@ group:
 
 - 查看服务进程
 
-  ```sh
+  ```shell
   $ ps -ef |grep uxsdashboard
 
   $ ps -ef |grep uxsagent
@@ -64,7 +64,7 @@ group:
 
 - 删除服务 PID 文件
 
-  ```sh
+  ```shell
   $ rm -rf /var/run/uxsagent.pid
 
   $ rm -rf /var/run/uxsmonitor.pid
@@ -72,7 +72,7 @@ group:
 
 - 查看各个服务日志
 
-  ```sh
+  ```shell
   $ tailf /var/log/uxs/uxsdashboard.log
 
   $ tailf /var/log/uxs/uxsagent.log
@@ -84,7 +84,7 @@ group:
 
 - 重置 ETCD
 
-  ```sh
+  ```shell
   # 修改 new
   $ vim /etc/uxs/config.json
 
@@ -104,7 +104,7 @@ group:
 
 - 生成许可证
 
-  ```sh
+  ```shell
   $ ufs_make_license --serial_number 17A179CFF629D10322E69AF61A959E013DCE5075  --chunkservers=1000 --clients=10000 --expire_date=2099-01-01 --capcity=2PiB
   ```
 
@@ -114,7 +114,7 @@ group:
 
 - `-a` 参数
 
-  ```sh
+  ```shell
   ufsmetaserver restart -a
 
   # 然后再执行 stop，并去管理平台手动启动
@@ -123,13 +123,13 @@ group:
 
 - `test` 参数
 
-  ```sh
+  ```shell
   查看 ufsmetaserver 当前情况
   ```
 
 - `-f` 参数
 
-  ```sh
+  ```shell
   # 查看服务错误日志
   ufsmetaserver -f
   ```
@@ -146,7 +146,7 @@ group:
 
 - `-f` 参数
 
-  ```sh
+  ```shell
   # 查看服务错误日志
   ufschunkserver -f
   ```
@@ -155,19 +155,19 @@ group:
 
 - 挂载子目录
 
-  ```sh
+  ```shell
   $ /usr/bin/ufsmount -o ufsioretries=3,ufstimeout=1,ufsdelayedinit,internal /export/nas/Users
   ```
 
 - 挂载回收站目录
 
-  ```sh
+  ```shell
   $ /usr/bin/ufsmount -m /export/meta/
   ```
 
 - 远程挂载
 
-  ```sh
+  ```shell
   $ ufsmount -H
   ```
 
@@ -181,38 +181,38 @@ group:
 
 - 监听 IP
 
-  ```sh
+  ```shell
   $ watch -n 1 "ip a"
   ```
 
 - 秒 `ping` IP
 
-  ```sh
+  ```shell
   # 目前用于高可用检测网卡是否ping通，由于上锁同步导致至少需1s
   ping 192.16.120.175 -c 1 -t 1 -W 1
   ```
 
 - 添加网卡 IP
 
-  ```sh
+  ```shell
   $ ip addr add 172.16.120.171/24 broadcast 172.16.120.255 dev eth1
   ```
 
 - 删除网卡 IP
 
-  ```sh
+  ```shell
   $ ip addr del 172.16.120.171/24 dev eth1
   ```
 
 - 刷新网卡
 
-  ```sh
+  ```shell
   $ ip addr flush eth1
   ```
 
 - 设置网卡状态
 
-  ```sh
+  ```shell
   $ ip link set eth1 down
   $ ip link set eth1 up
   ```
