@@ -1,225 +1,118 @@
 ---
-title: Cookie和Sessions
+title: 状态管理
 order: 2
 ---
 
-初识 Cookie：
-当你在访问网站时需要登录，只需要一次登录即可跳转不同页面，这需要通过 Cookie 才行。
-但是用户在不同的电脑登录，需要重复输入登录信息，因此推理出 Cookie 是在用户的浏览器上，硬盘的某个位置。
+# 状态管理
 
-    为什么需要http不像tcp那样，是无状态的，发了回之后就断开了，
+### 1. 协议状态
 
-Cookie: 1.保存在用户浏览器端的一些键值对 2.可以主动清除 3.也可以被"伪造"（即攻击者携带） 4.跨网站、跨域之间不是共享的（它是根据一个域名一个包放进去的，如果跨域之间能共享 Cookie 就完了） 5.浏览器设置不接受 Cookie（禁用后则永远无法进行登录）
-6.Cookie 是放到响应头 or 请求头中的，响应头（包含 cookie）+响应内容到浏览器，打开响应头找到 cookie（请求头同理）
+七层网络协议，大多都是有状态协议，如 `SMTP` ，但 `HTTP` 协议，则是无状态协议
 
-禁止浏览器设置 Cookie：
-投票利用 Cookie 设置次数不可取，若把网站的 Cookie 禁止则可以无限刷票。
-当禁止浏览器 Cookie 后访问时出现 CSRF 这是由于没有接收到模板{% csrf_token %}。因为 csrf 也会写在 Cookie 中，带着 Cookie 去。代码中利用
-@csrf_exempt #csrf 防御可去除。
+#### 1.1 有状态协议
 
-做登录时遇到的 BUG：
-我真特么的是个傻逼，设计原因，我利用<a class="btn btn_login" onclick="login()"  >登录</a>来做登录，没有用表单进行提交。而是用 jQuery 进行
-获取要提交的数据在利用$.post()进行提交，而在提交过程中，我在 a 标签的后面居然还写了一个 href="{% url "BILogin" %}"，真是傻逼。
-最后回调判断利用了 window.location.href="/app01/index";这种方式在前端进行了页面跳转，我感觉开发中以后绝对不是这样实现的，学后改进。
+如 `SMTP` 协议
 
-1、获取 Cookie：
-request.COOKIES['key']
-request.get_signed_cookie(key, default=RAISE_ERROR, salt='', max_age=None)
-参数：
-default: 默认值
-salt: 加密盐
-max_age: 后台控制过期时间
+- 发送前必须先建立 `TCP` 连接，并发送 `HELO/EHLO` 建立会话
+- 然后进入 `AUTH` 认证
+- 认证通过才可以发送数据
+- 通过 `QUI` 命令关闭会话
 
-2、服务端设置 Cookie：
-rep = HttpResponse(...) 或 rep ＝ render(request, ...)
+如上，整个通信过程，双方是必须要时刻记住当前连接的状态的，不同状态能接受的命令是不同的。另外，之前命令传输的某些数据也必须要记住，因为可能会对后续的命令产生影响
 
-    rep.set_cookie(key,value,...)
-    rep.set_signed_cookie(key,value,salt='加密盐',...)
-        参数：
-            key,              键
-            value='',         值
-            max_age=None,     超时时间
-            expires=None,     超时时间(IE requires expires, so set it if hasn't been already.)IE里面搞的和max_age相同
-                              设置这个字段则是用datatime.datetime.utcnow() + datatime.timedelta(seconds=5)注意时区
-            path='/',         Cookie生效的路径，/ 表示根路径(全局生效，即所有url都生效)，特殊的：根路径的cookie可以被任何url的页面访问
-                              /xx路径/则表示只有指定的xx路径才生效
-            domain=None,      Cookie生效的域名（这里默认是对应的二级域名，跟ip没有任何关系，多个域名是可以指向一个ip的。cookie只是改域名绑定的！）
-            secure=False,     https传输（基于安全的，有的请求是需要证书的，若用https访问需设置为true）
-            httponly=False    只能http协议传输，无法被JavaScript获取document.cookie来进行修改，但是它没法防止全部覆盖。
-                              例如以前连接别人wifi支付通过document.cookie即可获取账户密码。说是做安全用的其实比不加这个能够稍微安全一些而已
-                              （不是绝对安全，底层抓包可以获取到也可以被覆盖）要想真正安全还是需要https证书级别的安全对数据加密才行。
+这种有记忆功能的，就是有状态协议，通常维护状态代价较高
 
-    return rep
+#### 1.2 HTTP1.X 无状态协议
 
-    domain和path一个是设置前面的域名www.igarashi.com另一个是设置/app01/login的，之后即可给对应详细页面设定cookie。domain若没有设置则默认为
-    当前页面。若要给www.igarashi.com和orm.igarashi.com等多个页面进行cookie设置则可以设置为domain="igarashi.com"，此时都可以进行获取cookie。
+指协议对于交互性场景，没有记忆能力
 
-3.客户端浏览器设置 cookie
-由于 cookie 保存在客户端的电脑上，所以，JavaScript 和 jquery 也可以操作 cookie。(这里是利用 jquery.cookie.js 插件)
-<script src='/static/js/jquery.cookie.js'></script>
-$.cookie("list_pager_num", 30,{ path: '/' }); 参数与上大同小异
-expires 参数略有不同，支持两种时间和 datatime 对象
-d = new Date() d.setDate(d.getDate + 1)
+- 每个请求（_交互_）都是独立的，本次请求不会基于上次请求有任何改变
+  - 比如：用户登录，和把东西加入购物车，`HTTP` 不会去记录谁 和 他干了什么，是 **完全无依赖** 的
+- 没有记忆能力，即**无存储**
+  - 因此需要外部、如 `Cookie`、`Session` 等为交互存储状态
+- 和 `TCP/IP` 不同，发过去就断开了
+- 减少服务器的 `CPU` 和 内存 开销
 
-4.Cookie 应用：
-为啥有要有 Cookie：
-以前没有 cookie 时登录，若直接在内存中设置一个 flag 让其正确输入时变为 true，此时只要有一个用户登录成功即改为 True，后续用户无需登录
-这样就乱了套了。还有就是每个人登录的要看每个人的信息，若用 url 改则直接在 url 拼接?u=fuuka 即可访问，此时不就又崩了，没有登录则看到后台管理
-除非把用户名和密码都带上，此时可以下一个页面再到数据库进行一次认证，但这么做太垃圾了。因此要借助 cookie 做用户认证。
+### 2. Cookie
 
-    登录认证：（用cookie可以是可以但要付出代价）
-        普通Cookie：
-            -敏感信息（直接看到）不适合放在Cookie里面，敏感信息放在数据库，每次用户访问频繁操作数据库。
-        签名Cookie：
-            -利用set/get_signed_cookie加密（可能解密），这样比之前好一点，但能破解就没什么卵用
-                此时多了个参数salt=。。获取时加密盐要相同
+英文翻译为 甜品，使用 `Cookie` 可自动填写用户名、记住密码等，算是给用户的一点甜头
 
-            加密：参考set_signed_cookie里面的.sign()前的value，能够自定义替换，而unsign找回
-                Django里面用的时间TimestampSinger（value的类型）加密，tornado里面用的hash1加密
+### 3. Session
 
-            自定义加密（签名）：
-                可以自己建立一个加密类继承TimestampSinger，实现sign和unsign方法
+因为存入 `Cookie`，有泄密风险，因此将机密信息存入服务器，通过服务器来维护客户档案
 
-        ====================》因此，Cookie做认证：将不敏感的信息放在cookie中（如用户名）之后频繁操作数据库，做到数据不外露==============
-        注：这种方式说到底虽然保证信息不外露，但是数据库的压力增加，因此这种验证方式还是不太好。因此用另一种认证方式
+- 可以理解为服务端存储了一张 **User 表**， `SessionID` 即该表主键
+- 占用服务器资源，用户都要去 `Session` 服务器授权，因此限制负载均衡能力
+- 可以`CSRF` 跨域伪造请求，依然泄密
 
-初识 Session： 1.本质上来说 cookie 和 session 没有关系，但 session 和 cookie 却有关系。 2.若说 cookie 是放在客户端浏览器上的键值对，那么 session 则是放在服务器端上的但 session 要依赖于 cookie 来实现。 3.给服务器端发消息，服务器端生成一个随机字符串，然后把随机字符串写的客户端浏览器的 cookie。 4.同时在它的服务器端搞一个字典，把随机字符串当做 key，后面当做 value。每一个用户生成一个键值对。 5.以后用户便拿到服务器端 session 给的随机字符串（key）到服务器端进行验证（通过 key 获取 value）
+### 4. Token
 
-    注：若公司不允许用session时，只能用cookie做认证。 flask等等小框架都没有session，此时要自己创建session。
+令牌鉴权，不存用户信息了，**采用不同的加密方式进行数字签名**
 
-Session：
-session 是服务器端的一个键值对
-session 的内部机制依赖于 cookie
+- 用户访问服务器去到加密后的令牌，后续访问直接使用令牌即可
+- 哪怕下次访问负载均衡的其他节点，也可以根据令牌进行鉴权
+- 坏处是依然需要查库（去数据库查询认证信息，进行鉴权）
 
-    样式：
-        session={
-            随机字符串1：{                #每一个随机字符串对应一个用户
-                'is_login':True,         #对应的可以是cookie传来的各种信息，内部维护的就是一个大的字典
-                'username':"igarashi",
-                'id':
-                ....
-            }
-        }
-    上文初识提到的过程Django用一句requset.session['username']=user完成/['is_login']=True
-    而登录认证是则利用if requset.session['is_login']:
-    这一句其实做了N多操作，它获取当前用户的随机字符串，根据随机字符串获取对应信息
+> 因此为了服务器不存储、不查库、能鉴权，诞生了如今的 **JWT**
 
-Django 之 Session：
-Django 中默认支持 Session，其内部提供了 5 种类型的 Session 供开发者使用： 1.数据库（默认） 2.缓存 3.文件 4.缓存+数据库 5.加密 cookie
+### 5. JWT
 
-1、数据库 Session：（默认保存在数据库中）
-Django 默认支持 Session，并且默认是将 Session 数据存储在数据库中，即：django_session 表中。
+时下最流行的跨域认证解决方案
 
-    a. 配置 settings.py
-        SESSION_ENGINE = 'django.contrib.sessions.backends.db'   # 引擎（默认）
+[JWT](http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html) 全称`JSON Web Token` 它可以将所有信息都以 `JSON` 格式存储，包括 用户名、密码、加密信息等
 
-        SESSION_COOKIE_NAME ＝ "sessionid"                       # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
-        SESSION_COOKIE_PATH ＝ "/"                               # Session的cookie保存的路径（默认）
-        SESSION_COOKIE_DOMAIN = None                             # Session的cookie保存的域名（默认）
-        SESSION_COOKIE_SECURE = False                            # 是否Https传输cookie（默认）
-        SESSION_COOKIE_HTTPONLY = True                           # 是否Session的cookie只支持http传输（默认）
-        SESSION_COOKIE_AGE = 1209600                             # Session的cookie失效日期（2周）（默认）(这里是默认的失效时间)
-        SESSION_EXPIRE_AT_BROWSER_CLOSE = False                  # 是否关闭浏览器使得Session过期（默认）
-        SESSION_SAVE_EVERY_REQUEST = False                       # 是否每次请求都保存Session，默认修改之后才保存（默认）
-        #当设置为True时只要进行请求则不失效，配合set_expiry(10)效果更好
+#### 5.1 组成部分
 
-    b. 使用
-        def index(request):
-            # 获取、设置、删除Session中数据
-            request.session['k1']                #获取不到则报错
-            request.session.get('k1',None)       #获取不到为None
-            request.session['k1'] = 123
-            request.session.setdefault('k1',123) # 存在则不设置
-            del request.session['k1']            # 删除信息中的某一条
+通常由三部分组成，它们之间用圆点 （ . ）连接
 
-            request.session.clear()  == request.session.delete(request.session.session_key)  #都是把所有信息删除clear简单，用于注销
+- **Header:** 两部分组成，包括 `token` 类型 & 加密算法（如：_HMAC SHA256 或者 RSA_）
 
-            # 所有 键、值、键值对
-            request.session.keys()
-            request.session.values()
-            request.session.items()
-            request.session.iterkeys()
-            request.session.itervalues()
-            request.session.iteritems()
+  ```json
+  {
+    "alg": "HS256",
+    "typ": "JWT"
+  }
+  ```
 
+- **Payload:** 包含声明，指关于用户和其他数据的声明，存放实际传递的数据，有三种类型：
 
-            # 用户session的随机字符串
-            request.session.session_key
+  - `Registered claims：` 预定义声明，非强制，如：`iss (issuer)`,`exp (expiration time)`, `sub (subject)`, `aud (audience)` 等
+  - `Public claims：` 可随意定义
+  - `Private claims：` 用于在同意使用它们的各方之间共享信息，并且不是注册的或公开的声明
 
-            # 将所有Session失效日期小于当前日期的数据删除（防止脏数据的产生）
-            request.session.clear_expired()
+  ```json
+  {
+    "sub": "1234567890",
+    "name": "john",
+    "admin": true
+  }
+  ```
 
-            # 检查 用户session的随机字符串 在数据库中是否(request.session已包含判断)
-            request.session.exists("session_key")
+  对 `payload` 进行 `Base64` 编码就会得到 `JWT` 的第二部分
 
-            # 删除当前用户的所有Session数据
-            request.session.delete("session_key")
+> **注意:** 不要在 `payload` 或 `header` 中放置敏感信息，因为默认是不加密的
 
-            request.session.set_expiry(value)  #如60*60
-                * 如果value是个整数，session会在些秒数后失效。
-                * 如果value是个datatime或timedelta，session就会在这个时间后失效。
-                * 如果value是0,用户关闭浏览器session就会失效。
-                * 如果value是None,session会依赖全局session失效策略。
+- **Signature:** 对上面两部分的签名，防止消息被篡改
 
-2、缓存 Session：
-a. 配置 settings.py
+  需要指定一个只有服务器知道的密钥（_secret_）不能泄露给用户，然后按照如下形式生成签名
 
-        SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 引擎（若要放到缓存中只需要改这么一个配置即可）
-        SESSION_CACHE_ALIAS = 'default'                            # 使用的缓存别名（默认内存缓存，也可以是memcache），此处别名依赖缓存的设置
+  ```http
+  HMACSHA256(
+    base64UrlEncode(header) + "." +
+    base64UrlEncode(payload),
+    secret)
+  ```
 
-    通用配置，上面的是引擎配置
-        SESSION_COOKIE_NAME ＝ "sessionid"                        # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串
-        SESSION_COOKIE_PATH ＝ "/"                                # Session的cookie保存的路径
-        SESSION_COOKIE_DOMAIN = None                              # Session的cookie保存的域名
-        SESSION_COOKIE_SECURE = False                             # 是否Https传输cookie
-        SESSION_COOKIE_HTTPONLY = True                            # 是否Session的cookie只支持http传输
-        SESSION_COOKIE_AGE = 1209600                              # Session的cookie失效日期（2周）(这里是默认的失效时间)
-        SESSION_EXPIRE_AT_BROWSER_CLOSE = False                   # 是否关闭浏览器使得Session过期
-        SESSION_SAVE_EVERY_REQUEST = False                        # 是否每次请求都保存Session，默认修改之后才保存
+#### 5.2 JWT 使用方式
 
-    b. 使用
-        同上
+客户端收到服务器返回的 `JWT`，可以储存在 `Cookie` 里面，也可以储存在 `localStorage`
 
-3、文件 Session：
-a. 配置 settings.py
+此后，客户端每次与服务器通信，都要带上这个 `JWT`
 
-        SESSION_ENGINE = 'django.contrib.sessions.backends.file'    # 引擎
-        SESSION_FILE_PATH = None                                    # 缓存文件路径，如果为None，则使用tempfile模块获取一个临时地址
-        tempfile.gettempdir()                                       # 如：/var/folders/d3/j9tj0gz93dg06bmwxmhh6_xm0000gn/T
+可把它放在 `Cookie` 里自动发送，但这样不能跨域。更好的做法是放 **HTTP 请求头** 的 `Authorization`字段里
 
+```http
+Authorization: Bearer <token>
+```
 
-        SESSION_COOKIE_NAME ＝ "sessionid"                          # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串
-        SESSION_COOKIE_PATH ＝ "/"                                  # Session的cookie保存的路径
-        SESSION_COOKIE_DOMAIN = None                                # Session的cookie保存的域名
-        SESSION_COOKIE_SECURE = False                               # 是否Https传输cookie
-        SESSION_COOKIE_HTTPONLY = True                              # 是否Session的cookie只支持http传输
-        SESSION_COOKIE_AGE = 1209600                                # Session的cookie失效日期（2周）
-        SESSION_EXPIRE_AT_BROWSER_CLOSE = False                     # 是否关闭浏览器使得Session过期
-        SESSION_SAVE_EVERY_REQUEST = False                          # 是否每次请求都保存Session，默认修改之后才保存
-
-    b. 使用
-        同上
-
-4、缓存+数据库 Session：
-数据库用于做持久化，缓存用于提高效率
-
-    a. 配置 settings.py
-        SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'        # 引擎
-
-    b. 使用
-        同上
-
-5、加密 cookie Session：
-a. 配置 settings.py
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies' # 引擎
-
-    b. 使用
-        同上
-
-扩展：Session 用户验证：(利用装饰器)即登录验证可以写在装饰器中，另见下章 dispatch
-def login(func):
-def wrap(request, *args, \*\*kwargs): # 如果未登陆，跳转到指定页面
-if request.path == '/test/':
-return redirect('http://www.baidu.com')
-return func(request, *args, \*\*kwargs)
-return wrap
+另一种是，跨域的时候，`JWT` 就放在 `POST` 请求的数据体里面.

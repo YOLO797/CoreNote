@@ -8,8 +8,8 @@ hero:
       link: /components
 features:
   - icon: https://atts.w3cschool.cn/attachments/cover/cover_linux.png?t=1578642945&imageView2/1/w/150/h/84
-    title: Unix Like
-    desc: 万物基于Unix
+    title: UNIX-like
+    desc: 万物始于UNIX
     link: /unix_like
   - icon: https://www.runoob.com/wp-content/uploads/2013/07/pic_html5.gif
     title: 前端

@@ -8,9 +8,9 @@ hero:
       link: /components
 features:
   - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/linux.png
-    title: Unix Like
-    desc: 万物始于Unix
-    link: /unix_like
+    title: UNIX-like
+    desc: 万物始于UNIX
+    link: /unix-like
   - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/h5.gif
     title: 前端
     link: /front_end
