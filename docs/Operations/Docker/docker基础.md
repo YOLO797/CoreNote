@@ -45,13 +45,13 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 
 ##### 虚拟机：
 
-​ 如 **VMware** 、**PVE**、**ESXi**、**Workstation** 等，多台虚拟机都虚拟出了一套 **不同** 的 **虚拟机器硬件资源**、**Kernel**（内核）、**Lib 库**，然后在上层运行各自的 APP，像是物理机的系统中的子系统一样，从物理虚拟层面进行隔离，占用资源极高
+如 **VMware** 、**PVE**、**ESXi**、**Workstation** 等，多台虚拟机都虚拟出了一套 **不同** 的 **虚拟机器硬件资源**、**Kernel**（内核）、**Lib 库**，然后在上层运行各自的 APP，像是物理机的系统中的子系统一样，从物理虚拟层面进行隔离，占用资源极高
 
 - `Hypervisor:` 一种运行在基础物理服务器和操作系统之间的中间软件层，可允许多个操作系统和应用共享硬件。
 
 ##### 容器：
 
-​ 则是多个容器 **共同使用** 一套物理机 **硬件资源**、**Kernel** 然后从运行所需的 **Lib 库** 层面 进行隔离，因此极大的压榨了物理资源，使物理机物尽其用。
+则是多个容器 **共同使用** 一套物理机 **硬件资源**、**Kernel** 然后从运行所需的 **Lib 库** 层面 进行隔离，因此极大的压榨了物理资源，使物理机物尽其用。
 
 - `Container Runtime：` 通过 Linux 内核虚拟化能力管理多个容器，多个容器共享一套操作系统内核。因此 **摘掉了内核占用的空间** 及运行所需要的耗时，使得容器极其轻量与快速。
 
@@ -74,8 +74,8 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 
 将容器运行时相关的程序从 `docker daemon` 剥离出来，形成了 **containerd**
 
-- `containerd：` 屏蔽了 `docker deamon` 底层细节（同时解耦升级后的不兼容），抽象出了一套 `gRPC` 接口
-- `runC:` 上文提到的**CLI**工具， `runC + containerd-shim` 通过 `gRPC` 去调用 `containerd`
+- `runC:` 是一个 `linux` **CLI**（_命令行_）工具， `runC + containerd-shim` 通过 `gRPC` 去调用 `containerd` 来创建和运行容器
+- `containerd：` 一个守护程序，它管理容器的生命周期，屏蔽了 `docker deamon` 底层细节（同时解耦升级后的不兼容），抽象出了一套 `gRPC` 接口，提供了在节点上执行容器和管理镜像的最小功能集
 
 <img src="./img/CS架构.png">
 
@@ -245,18 +245,3 @@ wsl --set-default-version 2
 ![主界面](./img/docker_desktop.jpg)
 
 ---
-
-## `Dockerfile`
-
-::: tip
-Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。
-
-官方文档：
-[`Dockerfile` 文档（英文）](https://docs.docker.com/engine/reference/builder/)
-[`Dockerfile` 最佳实践（英文）](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/)
-:::
-
-- [Dockerfile | 菜鸟教程](https://www.runoob.com/docker/docker-dockerfile.html)
-- [Dockerfile 基本结构 | w3cschool](https://www.w3cschool.cn/reqsgr/redknozt.html)
-
-- -
