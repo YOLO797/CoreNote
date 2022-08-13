@@ -139,7 +139,7 @@ order: 1
 - 重载服务
 
   ```shell
-  nginx -s reload
+  $ sudo nginx -s reload
   ```
 
 ## 3. 使用基础
@@ -148,7 +148,7 @@ order: 1
 
 - **conf**：配置文件
 
-- **html**：存放静态文件 index.html 是默认的欢迎页面
+- **html**：存放静态文件 `index.html` 是默认的欢迎页面
 
 - **logs**：日志目录
 
