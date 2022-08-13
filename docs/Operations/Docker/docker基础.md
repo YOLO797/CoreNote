@@ -115,7 +115,7 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 
 #### 安装
 
-###### 配置宿主机网卡转发
+###### 必要：配置宿主机网卡转发
 
 ```shell
 ## 改系统配置，需要root执行，写如下系统配置到 `docker.conf` 中
@@ -183,7 +183,6 @@ sysctl -p /etc/sysctl.d/docker.conf
     "registry-mirrors": ["https://ubhu1j5h.mirror.aliyuncs.com"]
   }
   EOF
-
   ```
 
 - 后续一系列配置
@@ -212,7 +211,45 @@ sysctl -p /etc/sysctl.d/docker.conf
   journalctl -fu docker
   ```
 
-### 2.2 Windows
+### 2.2 Debian
+
+- 安装必备的基础系统工具
+
+  ```shell
+  sudo apt-get update
+  sudo apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release software-properties-common
+  ```
+
+- 安装 `Docker` 的阿里 `GPG` 密钥证书
+
+  ```shell
+  curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/NAME.gpg --import
+
+  # import
+  # gpg: keyring '/etc/apt/trusted.gpg.d/NAME.gpg' created
+  # gpg: directory '/root/.gnupg' created
+  # gpg: /root/.gnupg/trustdb.gpg: trustdb created
+  # gpg: key 8D81803C0EBFCD88: public key "Docker Release (CE deb) <docker@docker.com>" # imported
+  # gpg: Total number processed: 1
+  # gpg:               imported: 1
+  ```
+
+- 写入 `Docker` 镜像源地址
+
+  ```shell
+  add-apt-repository "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian $(lsb_release -cs) stable"
+  ```
+
+- 再更新，并安装 `docker`
+
+  ```
+  sudo apt-get update
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  ```
+
+- 后续同上 [CentOS 安装](/operations/docker/docker基础#yum-安装配置-docker)
+
+### 2.3 Windows
 
 推荐参考官方文档 [在 Windows 上安装 Docker Desktop（英文）](https://docs.docker.com/docker-for-windows/install/)
 
@@ -245,3 +282,14 @@ wsl --set-default-version 2
 ![主界面](./img/docker_desktop.jpg)
 
 ---
+
+### 3 实现原理
+
+虚拟化核心需要解决的问题：**资源隔离** 与 **资源限制**
+
+- 虚拟机硬件虚拟化技术，通过一个 `hypervisor` 层实现对资源的彻底隔离
+- 容器时操作系统级别的虚拟化，利用的是内核的 `Cgroup` 和 `Namespace` 特性，此功能完全通过软件实现
+
+### 3.1 Namespace 资源隔离
+
+命名空间是全局资源的一种抽象，将资源放到不同的命名空间中，各个命名空间中的资源是相互隔离的

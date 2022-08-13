@@ -804,9 +804,9 @@ asyncio.run(main())
   async def main():
       start = time.time()
       url_list = [
-          "https://gitee.com/igarashi/breath-for-code/raw/master/public/img/Django.png",
-          "https://gitee.com/igarashi/breath-for-code/raw/master/public/img/antd.png",
-          "https://gitee.com/igarashi/breath-for-code/raw/master/public/img/etcd.png",
+          "http://www.deadly-exception.icu:8999/img/Django.png",
+          "http://www.deadly-exception.icu:8999/img/antd.png",
+          "http://www.deadly-exception.icu:8999/img/etcd.png",
       ]
 
       # 创建多个协程
@@ -826,9 +826,9 @@ asyncio.run(main())
   asyncio.run(main())
 
   ### 输出结果
-  # start download: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/Django.png
-  # start download: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/antd.png
-  # start download: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/etcd.png
+  # start download: http://www.deadly-exception.icu:8999/img/Django.png
+  # start download: http://www.deadly-exception.icu:8999/img/antd.png
+  # start download: http://www.deadly-exception.icu:8999/img/etcd.png
   # ret ['end download: Django.png', 'end download: antd.png', 'end download: etcd.png', RuntimeError()]
   # 2.351871967315674
   ```

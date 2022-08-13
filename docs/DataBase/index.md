@@ -20,11 +20,11 @@ nav:
   order: 5
 
 features:
-  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/etcd.png
+  - icon: http://www.deadly-exception.icu:8999/img/etcd.png
     title: ETCD
     desc: 分布式存储，同步配置、k8s（基于GO）
     link: /data-base/etcd
-  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/mongodb.png
+  - icon: http://www.deadly-exception.icu:8999/img/mongodb.png
     title: MongoDB
     desc: 分布式数据库，键值对（基于C++）
     link: /data-base/mongo-db/
@@ -32,15 +32,15 @@ features:
     title: Zookeeper
     desc: 分布式数据库
     link: /data-base/zoo-keeper/
-  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/redis.png
+  - icon: http://www.deadly-exception.icu:8999/img/redis.png
     title: Redis
     desc: 缓存数据库、预读
     link: /data-base/redis
-  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/mysql.png
+  - icon: http://www.deadly-exception.icu:8999/img/mysql.png
     title: MySQL
     desc: 最常用的关系型数据库
     link: /data-base/my-sql
-  - icon: https://gitee.com/igarashi/breath-for-code/raw/master/public/img/postgresql.png
+  - icon: http://www.deadly-exception.icu:8999/img/postgresql.png
     title: PostgreSQL
     desc: 目前流行、替代MySQL
     link: /data-base/postgre-sql/

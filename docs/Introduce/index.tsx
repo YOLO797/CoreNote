@@ -3,8 +3,7 @@ import { Popover, Button } from 'antd';
 import styles from './index.less';
 
 const Introduce = () => {
-  const img_perfix_path =
-    'https://gitee.com/igarashi/breath-for-code/raw/master/public/img/';
+  const img_perfix_path = 'http://www.deadly-exception.icu:8999/img/';
 
   const igarashi_content = (
     <div className={styles.popover_ctr}>
@@ -116,7 +115,7 @@ const Introduce = () => {
         >
           <img
             className={styles.head_img}
-            src="https://gitee.com/igarashi/breath-for-code/raw/master/public/img/igarashi.jpg"
+            src="http://www.deadly-exception.icu:8999/img/igarashi.jpg"
             alt="Igarashi-Chiduru"
           />
           <br />
