@@ -36,5 +36,5 @@ $ npm run build
 
 **贡献者**：
 
+- [Igarashi-Chiduru](https://github.com/Igarashi-Chiduru)
 - [燕成昭 (yanchengzhao)](https://gitee.com/yanchengzhao)
-- [Igarashi-Chiduru - github.com](https://github.com/Igarashi-Chiduru)
