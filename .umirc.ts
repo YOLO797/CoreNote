@@ -4,9 +4,8 @@ import { join } from 'path';
 export default defineConfig({
   title: 'CoreNote',
   mode: 'site',
-  favicon:
-    'https://gitee.com/igarashi/breath-for-code/raw/master/public/img/arknights_logo.png',
-  logo: 'https://gitee.com/igarashi/breath-for-code/raw/master/public/img/arknights_logo.png',
+  favicon: 'http://www.deadly-exception.icu:8999/img/arknights_logo.png',
+  logo: 'http://www.deadly-exception.icu:8999/img/arknights_logo.png',
   outputPath: 'docs-dist',
   locales: [
     ['zh-CN', '中文'],
@@ -17,13 +16,13 @@ export default defineConfig({
   navs: {
     'en-US': [
       null, // null 值代表保留约定式生成的导航，只做增量配置
-      { title: 'GitHub', path: 'https://github.com/IgarashiToure/HuanPlan' },
-      { title: 'Gitee', path: 'https://gitee.com/igarashi/breath-for-code' },
+      { title: 'GitHub', path: 'https://github.com/Igarashi-Chiduru' },
+      { title: 'Gitee', path: 'https://gitee.com/igarashi/core-note' },
     ],
     'zh-CN': [
       null,
-      { title: 'GitHub', path: 'https://github.com/IgarashiToure/HuanPlan' },
-      { title: 'Gitee', path: 'https://gitee.com/igarashi/breath-for-code' },
+      { title: 'GitHub', path: 'https://github.com/Igarashi-Chiduru' },
+      { title: 'Gitee', path: 'https://gitee.com/igarashi/core-note' },
     ],
   },
   extraBabelPlugins: [
@@ -48,7 +47,7 @@ export default defineConfig({
   metas: [
     {
       name: 'description',
-      content: '卷王之王，卷死他妈的',
+      content: '有人出生在罗马，而我出生是牛马',
     },
   ],
   alias: {
