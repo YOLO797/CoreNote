@@ -19,6 +19,18 @@ $ pip install aioetcd3
 
 ### 1. 使用参考
 
+##### 缺陷:
+
+当多个 `endpoints` 时，如下：
+
+```json
+{
+  "etcd_endpoints": "ipv4:///172.16.120.141:22379,172.16.120.142:22379,172.16.120.143:22379"
+}
+```
+
+若 `172.16.120.141` 离线，该库依然有概率生成 `141` 这个错误的连接，导致不可用。需手动 捕获异常且 `update_server_list` 容错，因此异常难用
+
 #### 1.1 开源参考
 
 [server](https://github.com/matrixji/eha/blob/master/eha/agent/server.py)
