@@ -42,7 +42,6 @@ sudo systemctl reload firewalld
 sudo yum install postfix
 sudo systemctl enable postfix
 sudo systemctl start postfix
-
 ```
 
 ### 3. 安装 GitLab
@@ -51,26 +50,27 @@ sudo systemctl start postfix
 sudo yum install -y gitlab-ce
 ```
 
-###
-
 ### 4. 初始化 GitLab
 
-```
-# sudo vim /etc/gitlab/gitlab.rb
-# 修改gitlab配置文件，将external_url='http://gitlab.example.com'地址修改成服务器的IP或者域名
+```shell
+sudo vim /etc/gitlab/gitlab.rb
+
+# 修改 gitlab 配置文件，将 external_url='http://gitlab.example.com' 地址修改成服务器的IP或者域名
 external_url "https://192.168.2.90"
 
-# 修改gitlab配置文件，配置初始密码：gitlab_rails['initial_root_password'] = '<my_strong_password>'
+# 修改 gitlab 配置文件，配置初始密码
+gitlab_rails['initial_root_password'] = '<my_strong_password>'
 
 # 配置监听网络：tcp
 gitlab_workhorse['listen_network'] = "tcp"
+
 # 配置地址和端口
 gitlab_workhorse['listen_addr'] = "192.168.2.908888"
 ```
 
 ### 5. 修改网络端口
 
-```
+```shell
 # 禁用内置NG
 nginx['enable'] = false
 
@@ -89,39 +89,52 @@ gitlab_workhorse['listen_addr'] = "192.168.11.20:8888"
 
 ### 6. 常用命令
 
-```
-gitlab-ctl reconfigure                            # 重新编译配置
-gitlab-ctl start                                  # 启动
-gitlab-ctl stop                                   # 停止
-gitlab-ctl restart                                # 重启
-gitlab-ctl status                                 # 查看状态
-vim /etc/gitlab/gitlab.rb                         # 修改配置
-gitlab-rake gitlab:check SANITIZE=true --trace    # 检查gitlab
-gitlab-ctl tail                                   # 查看日志
-gitlab-ctl tail nginx/gitlab_access.log
+- 重新编译配置，并启动 `GitLab` 服务
 
+  ```shell
+  sudo gitlab-ctl reconfigure
+  ```
 
-重启配置，并启动gitlab服务
-sudo gitlab-ctl reconfigure
+- 启动所有 `GitLab`
 
-启动所有 gitlab
-sudo gitlab-ctl start
+  ```shell
+  sudo gitlab-ctl start
+  ```
 
-重新启动GitLab
-sudo gitlab-ctl restart
+- 重新启动 `GitLab`
 
-停止所有 gitlab
-sudo gitlab-ctl stop
+  ```shell
+  sudo gitlab-ctl restart
+  ```
 
-查看服务状态
-sudo gitlab-ctl status
+- 停止所有 `GitLab`
 
-查看Gitlab日志
-sudo gitlab-ctl tail
+  ```shell
+  sudo gitlab-ctl stop
+  ```
 
-修改默认的配置文件
-sudo vim /etc/gitlab/gitlab.rb
+- 查看服务状态
 
-检查gitlab
-gitlab-rake gitlab:check SANITIZE=true --trace
-```
+  ```shell
+  sudo gitlab-ctl status
+  ```
+
+- 查看 `Gitlab` 日志
+
+  ```shell
+  sudo gitlab-ctl tail
+
+  sudo gitlab-ctl tail nginx/gitlab_access.log
+  ```
+
+- 修改默认的配置文件
+
+  ```shell
+  sudo vim /etc/gitlab/gitlab.rb
+  ```
+
+- 检查 `Gitlab`
+
+  ```shell
+  gitlab-rake gitlab:check SANITIZE=true --trace
+  ```

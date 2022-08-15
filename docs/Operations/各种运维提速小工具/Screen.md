@@ -13,41 +13,42 @@ group:
 
 **安装 screen 工具**
 
-- Ubuntu:
+- **Ubuntu**
 
-  ```bash
+  ```shell
   sudo apt-get install screen
   ```
 
-- CentOS:
+- **CentOS**
 
-  ```bash
+  ```shell
   yum install screen
   ```
 
 **使用简介**
 
-- 创建 screen 窗口：
+- 创建 `screen` 窗口
 
-  ```bash
-  screen -S  name	# 这里name 是自己起得名字，方便管理
+  ```shell
+  # name 自己起名字，方便管理
+  screen -S <name>
   ```
 
 - 退出：
 
-  ```bash
-  Ctrl a + d
+  ```shell
+  ctrl a + d
   ```
 
 - 恢复：
 
-  ```bash
+  ```shell
   screen -r
   ```
 
 - 查看 `screen` 进程：
 
-  ```bash
+  ```shell
   screen -ls
   ```
 
@@ -55,15 +56,18 @@ group:
 
   - 单个 `screen` 进程：
 
-    ```bash
+    ```shell
     screen -r -d
     ```
 
   - 多个 `screen` 进程：(通过它的 **PID** 进入)
 
-    ```bash
-    screen -ls	# 查看进程id号
-    screen -r -d 1805	# 进入id为 1805 的 screen 进程
+    ```shell
+    # 查看进程id号
+    screen -ls
+
+    # 进入id为 1805 的 screen 进程
+    screen -r -d 1805
     ```
 
 - 中断进程：
@@ -71,12 +75,15 @@ group:
   - 进入后中断：
 
     ```shell
-    screen -r 30339		# 进入要中断的screen
-    exit # 或contorl + c 退出 screen
+    # 进入要中断的screen
+    screen -r 30339
+
+    # 或contorl + c 退出 screen
+    exit
     ```
 
   - 直接中断：
 
     ```shell
-    screen -S screenID -X quit
+    screen -S <screenID> -X quit
     ```

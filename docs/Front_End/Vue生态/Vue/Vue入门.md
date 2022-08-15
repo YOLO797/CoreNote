@@ -10,15 +10,15 @@ group:
 
 既可以当成 `小插件` 使用，也可以当做 `全套全家桶前端项目` 来使用的框架
 
-<Alert type="info"><Font type="miku" fsize="m">Vue 文档</Font>写的已经**可以**了，没必要自己**再抄一遍**文档！</Alert>
+<Alert type="info"><Font type="miku" fsize="m">**Vue** 文档</Font>写的已经 **很可以**了，没必要 **再抄一遍** 文档！</Alert>
 
-[Vue2](https://cn.vuejs.org/v2/guide/)
+[Vue 2](https://v2.cn.vuejs.org/)
 
-[Vue3](https://v3.cn.vuejs.org/guide/introduction.html)
+[Vue 3](https://v3.cn.vuejs.org/guide/introduction.html)
 
 [Vue3-Cookbook](https://v3.cn.vuejs.org/cookbook/)
 
-[Vue3 新版中文文档](https://staging-cn.vuejs.org/guide/introduction.html)
+[Vue3 中文](https://staging-cn.vuejs.org/guide/introduction.html)
 
 <Font type="miku" fsize="l">因此以下仅为踩坑记录</Font>
 

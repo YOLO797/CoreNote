@@ -9,11 +9,9 @@ group:
 
 # rdesktop
 
-[github](https://github.com/rdesktop)
+### 1. 简介
 
-### 1.简介
-
-`rdesktop` 是微软 **RDP** 协议的开源客户端
+[rdesktop](https://github.com/rdesktop) 是微软 **RDP** 协议的开源客户端
 
 #### 安装
 
