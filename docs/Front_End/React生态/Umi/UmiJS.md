@@ -1,9 +1,15 @@
 ---
-title: UmiJS - 插件篇
-order: 2
+title: UmiJS
+order: 1
+
+group:
+  title: umi
+  order: 33
 ---
 
-# UmiJS - 插件篇
+# UmiJS
+
+[UmiJS](https://umijs.org/) | [Github](https://github.com/umijs)
 
 ## 坎坷的开始
 

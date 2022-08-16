@@ -1,10 +1,6 @@
 ---
-title: 源码说明
-order: 1
-
-group:
-  title: UmiJS源码解构
-  order: 34
+title: umi源码
+order: 2
 ---
 
 ## umi 源码学习

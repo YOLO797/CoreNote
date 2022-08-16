@@ -1,9 +1,9 @@
 ---
-title: FastAPI 踩坑集合
+title: FastAPI 踩坑记录
 order: 4
 ---
 
-# FastAPI 踩坑集合
+# FastAPI 踩坑记录
 
 ### OpenApi
 
@@ -24,7 +24,7 @@ order: 4
 
 ### websocket uvicorn
 
-> 场景描述：
+> **场景：**
 >
 > 前端通过 `ws://x.x.x.x:xxxx/xxx` 的 `websocket` 协议请求 `FASTAPI` 时
 >
@@ -37,6 +37,7 @@ order: 4
 - 客户端中的连接 `ws` 协议的 `js` 代码也报 `handshake: Unexpected response code: 400
 
 **解决方式：**
+
 安装带有 `websockets` 功能的 `uvicorn`
 
 ```shell

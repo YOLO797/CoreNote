@@ -42,7 +42,9 @@ if __name__ == "__main__":
 
 ### 2. 内置 WSGI
 
-如下利用内置模块，模拟个 `web` 框架玩具
+[WSGI 是啥](/operations/nginx/应用部署#11-uwsgi)
+
+利用 `Python` 内置模块，模拟个 `web` 框架玩具
 
 ```python
 import time

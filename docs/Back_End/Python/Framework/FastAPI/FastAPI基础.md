@@ -8,11 +8,9 @@ group:
 
 # FastAPI
 
-https://github.com/tiangolo/fastapi
+[FastAPI 文档](https://fastapi.tiangolo.com/)| [GitHub](https://github.com/tiangolo/fastapi)
 
-https://fastapi.tiangolo.com/
-
-## FastAPI 简介：
+## FastAPI 简介
 
 ### 1.特性：
 
@@ -60,7 +58,6 @@ Pydantic：
     @app.get("/{item}")
     async def foo(item: str):
         return {"item": item}
-
 
 - 此时的 item 即可以直接获取到浏览器 / 后面的值，若 item 不是 str 类型的，则会报错
 
@@ -130,7 +127,6 @@ Pydantic：
     async def foo(q: str = Query(..., min_length=3, max_length=10)):
         return {"param": q}
 
-
 - Query 仅适用于 GET 请求上的参数验证，因为其他请求有 Body,**并且 Query 和 Body 不同仅适用于校验单个参数，不能校验 BaseModel**
 
 - ... 则表示此参数为必填项，若给值，则值为该参数的默认值
@@ -182,12 +178,11 @@ Pydantic：
 【Body 的其他参数】
 
 - embed: bool = False 默认值为 False，表示前端传入该 Body 结构不用传 key，直接传 value 即可
-        class Item(BaseModel):
-            name: str
-            description: str = None
-            price: float
-            tax: float = None
-
+  class Item(BaseModel):
+  name: str
+  description: str = None
+  price: float
+  tax: float = None
 
         @app.put("/items")
         async def foo(
@@ -197,23 +192,24 @@ Pydantic：
             return {"item": item}
 
   当为 False，前端无需传 Body 的 key，直接传 value 即可被识别：
-        {
-            "name": "string",
-            "description": "string",
-            "price": 0,
-            "tax": 0
-        }
+  {
+  "name": "string",
+  "description": "string",
+  "price": 0,
+  "tax": 0
+  }
 
   若 embed=True，此时 item 作为单独的键， 前端必须传 key，即传参写入 item 这个键，传入结构如下：
-        {
-          "item": {
-            "name": "string",
-            "age": 0,
-            "description": "string",
-            "tax": 0
-          }
-        }
+  {
+  "item": {
+  "name": "string",
+  "age": 0,
+  "description": "string",
+  "tax": 0
+  }
+  }
   该参数在识别单个参数时常常有效（前端传入多个{key: value} 形式参数，后端却只要唯一的那个参数时，使用 True 可以有效识别）
+
 - media_type: str = "application/json"
 
 #### （5）Body 内字段 Field 校验
@@ -329,7 +325,7 @@ https://fastapi.tiangolo.com/tutorial/extra-data-types/
 - 但建议选择 uuid.uuid4().hex 形式，这样可以拿到字符串类型的 uuid
 
 - 可输入参数：
-        68a4bb24-9dc3-11ea-bf01-701ce72d7e03
+  68a4bb24-9dc3-11ea-bf01-701ce72d7e03
 
         {
           "start_datetime": "2020-05-24T13:35:24.999Z",
@@ -349,7 +345,6 @@ https://fastapi.tiangolo.com/tutorial/extra-data-types/
 
     ):
         return {"cookie_info": cookie_info}
-
 
 - 需要 F12 Application 中 添加字段 cookie_info: "内容" 然后发送请求即可
 
@@ -446,7 +441,6 @@ Header 用于校验头部信息，和 Cookie 类型，一样能获取到头部�
     async def baz(item_id: str):
         return items[item_id]
 
-
 - schema_extra 我们可以给 Model 进行赋初值，类型 mock 数据一样，即假装将数据库的数据取出来返回，这是是通过输入路径参数来返回不同的值
 
   - 在 Model 下 创建 Config 类， 通过 schema_extra = { example={ } } 形式，便可以对模型设置文档中真正的例子
@@ -498,7 +492,6 @@ Header 用于校验头部信息，和 Cookie 类型，一样能获取到头部�
     async def create_user(*, user_in: UserIn):
         user_saved = fake_save_user(user_in)
         return user_saved
-
 
 - 输入模型利用 UserIn, 经过 UserInDB 将密码哈希转化，然后利用 UserOut 进行格式化输出
 
@@ -593,7 +586,6 @@ Header 用于校验头部信息，和 Cookie 类型，一样能获取到头部�
     async def read_keyword_weights():
         return {"foo": 2.3, "bar": 3.4}
 
-
 - 返回值可以用 Dict(str, float) 没什么好说的
 
 #### （4）返回状态码
@@ -634,11 +626,10 @@ Header 用于校验头部信息，和 Cookie 类型，一样能获取到头部�
             )
         return {"item": items[item_id]}
 
-
 - 此时返回值形式如下：可以返回错误的自定义细节
-        {
-          "detail": "Item not found"
-        }
+  {
+  "detail": "Item not found"
+  }
 
 - raise: 通常抛出异常都应该用此形式，会直接抛出而省去执行后续代码
 
@@ -675,9 +666,9 @@ Header 用于校验头部信息，和 Cookie 类型，一样能获取到头部�
   （即 unicorn_exception_handler 作为**回调函数**）相当于传入参数异常类，并加了个回调函数一起执行后返回结果
 
 - 除了返回错误码 418 之外，还返回了 content 里面的信息如下形式:
-        {
-          "message": "Oops! yolo did something. There goes a rainbow..."
-        }
+  {
+  "message": "Oops! yolo did something. There goes a rainbow..."
+  }
 
 ##### 覆盖框架默认的异常处理程序
 
@@ -709,15 +700,15 @@ fastapi 处理器都是默认返回 JSON 响应的，可以对框架默认的 ra
 - StarletteHTTPException：框架默认的 Http 请求 异常
 
 - 此时转到 /items/foo 路径下，会得到上文覆盖的另一个结果
-        1 validation error for Request
-        path -> item_id
-          value is not a valid integer (type=type_error.integer)
+  1 validation error for Request
+  path -> item_id
+  value is not a valid integer (type=type_error.integer)
 - PlainTextResponse： 利用该函数将请求异常和验证异常进行改写
 
   - 若此时转到 /items/foo，则显示如下
-          1 validation error for Request
-          path -> item_id
-            value is not a valid integer (type=type_error.integer)
+    1 validation error for Request
+    path -> item_id
+    value is not a valid integer (type=type_error.integer)
 
 - 这样做的一部分原因是，若验证出错，常理来说用户应该看不见内部错误信息，免得暴露出安全漏洞给到用户
 
@@ -771,7 +762,6 @@ fastapi 处理器都是默认返回 JSON 响应的，可以对框架默认的 ra
     @app.post("/uploadfile/")
     async def create_upload_file(file: UploadFile = File(...)):
         return {"filename": file.filename}
-
 
 - 导入 File，用于接收文件相关参数，可以拿到文件对象的各种属性，比如文件名、文件长度等等
 
@@ -853,7 +843,6 @@ fastapi 处理器都是默认返回 JSON 响应的，可以对框架默认的 ra
         fake_db[id] = json_compatible_item_data
         print(json_compatible_item_data, type(json_compatible_item_data))
         print(fake_db, type(fake_db))
-
 
 - 注意 datatime 是 python 的格式，那么正常的 json 怎么会有 datatime 格式呢，因此应该去转换。
 - jsonable_encoder()：可以通过兼容编码器来将其他格式转为 json 格式，比如上文的 datetime
